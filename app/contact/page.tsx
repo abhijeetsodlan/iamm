@@ -1,0 +1,39 @@
+import type { Metadata } from "next";
+import { ContactForm } from "@/components/forms/ContactForm";
+import { ButtonLink } from "@/components/ui/Button";
+import { SectionHeading } from "@/components/ui/SectionHeading";
+import { SocialLinks } from "@/components/ui/SocialLinks";
+
+export const metadata: Metadata = {
+  title: "Contact",
+  description: "Contact IAMM about AI automation, workflow optimization, or a business assessment.",
+};
+
+export default function ContactPage() {
+  return (
+    <main className="py-8 sm:py-16 lg:py-24">
+      <div className="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-[0.9fr_1.1fr] lg:px-8">
+        <div className="order-1 lg:order-1">
+          <SectionHeading eyebrow="Contact" title="Talk to IAMM about your next intelligent workflow." description="Share what you are trying to improve. This frontend form is structured for future API or Supabase integration." />
+        </div>
+        <div className="order-2 lg:order-2 lg:row-span-2">
+          <ContactForm />
+        </div>
+        <div className="order-3 space-y-6 rounded-lg border border-border bg-muted p-6 lg:order-3">
+          <div>
+            <h2 className="font-semibold text-foreground">Connect with IAMM</h2>
+            <p className="mt-2 text-sm leading-6 text-muted-foreground">Reach us by email or follow IAMM on social platforms.</p>
+            <div className="mt-5">
+              <SocialLinks showLabels />
+            </div>
+          </div>
+          <div className="border-t border-border pt-5">
+            <h2 className="font-semibold text-foreground">Prefer a structured start?</h2>
+            <p className="mt-2 text-sm leading-6 text-muted-foreground">The assessment page is best when you already know which workflows are slowing the business down.</p>
+            <ButtonLink href="/assessment" className="mt-4">Take Assessment</ButtonLink>
+          </div>
+        </div>
+      </div>
+    </main>
+  );
+}
