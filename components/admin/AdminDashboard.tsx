@@ -269,7 +269,7 @@ export function AdminDashboard({ view }: { view: AdminView }) {
   const pathname = usePathname();
   const [data, setData] = useState<SubmissionsResponse>({ contacts: [], assessments: [] });
   const [filters, setFilters] = useState<Filters>(defaultFilters);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [error, setError] = useState("");
   const [authChecked, setAuthChecked] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -322,23 +322,23 @@ export function AdminDashboard({ view }: { view: AdminView }) {
 
   return (
     <main className="min-h-screen bg-background">
-      <div className={`grid min-h-screen transition-[grid-template-columns] duration-200 ${sidebarOpen ? "grid-cols-[220px_1fr] sm:grid-cols-[240px_1fr]" : "grid-cols-[64px_1fr] sm:grid-cols-[72px_1fr]"}`}>
-        <aside className="min-w-0 border-r border-border bg-surface shadow-sm">
+      <div className={`grid min-h-screen transition-[grid-template-columns] duration-200 ${sidebarOpen ? "grid-cols-[220px_1fr] sm:grid-cols-[240px_1fr]" : "grid-cols-1"}`}>
+        {sidebarOpen ? <aside className="min-w-0 border-r border-border bg-surface shadow-sm">
           <div className="flex h-16 items-center justify-center border-b border-border px-3">
-            <button type="button" title={sidebarOpen ? "Close sidebar" : "Open sidebar"} aria-label={sidebarOpen ? "Close sidebar" : "Open sidebar"} onClick={() => setSidebarOpen((value) => !value)} className="flex h-11 w-full items-center justify-center rounded-md text-muted-foreground transition hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/25"><Icon name="menu" /></button>
+            <button type="button" title="Close sidebar" aria-label="Close sidebar" onClick={() => setSidebarOpen(false)} className="flex h-11 w-full items-center justify-center rounded-md text-muted-foreground transition hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/25"><Icon name="menu" /></button>
           </div>
           <nav className="grid gap-1 p-3" aria-label="Admin navigation">
             {navItems.map((item) => {
               const active = pathname === item.href || (pathname === "/admin" && item.href === "/admin/analytics");
-              return <Link key={item.href} href={item.href} title={item.label} className={`flex h-11 items-center rounded-md text-sm font-semibold transition ${sidebarOpen ? "justify-between px-3" : "justify-center px-0"} ${active ? "bg-primary/10 text-primary ring-1 ring-primary/20" : "text-muted-foreground hover:bg-muted hover:text-foreground"}`}><span className="flex items-center gap-3"><Icon name={item.icon} />{sidebarOpen ? <span>{item.label}</span> : null}</span>{sidebarOpen ? <span className="rounded-full bg-muted px-2 py-0.5 text-xs text-muted-foreground">{item.count}</span> : null}</Link>;
+              return <Link key={item.href} href={item.href} title={item.label} onClick={() => setSidebarOpen(false)} className={`flex h-11 items-center rounded-md text-sm font-semibold transition ${sidebarOpen ? "justify-between px-3" : "justify-center px-0"} ${active ? "bg-primary/10 text-primary ring-1 ring-primary/20" : "text-muted-foreground hover:bg-muted hover:text-foreground"}`}><span className="flex items-center gap-3"><Icon name={item.icon} />{sidebarOpen ? <span>{item.label}</span> : null}</span>{sidebarOpen ? <span className="rounded-full bg-muted px-2 py-0.5 text-xs text-muted-foreground">{item.count}</span> : null}</Link>;
             })}
           </nav>
-        </aside>
+        </aside> : null}
 
         <section className="min-w-0">
           <header className="sticky top-0 z-30 border-b border-border bg-surface/95 backdrop-blur">
             <div className="flex min-h-16 flex-col gap-3 px-5 py-4 sm:flex-row sm:items-center sm:justify-between lg:px-8">
-              <div className="min-w-0"><p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">Admin Dashboard</p><h1 className="truncate text-2xl font-semibold tracking-tight text-foreground">{title}</h1></div>
+              <div className="flex min-w-0 items-center gap-3">{!sidebarOpen ? <button type="button" title="Open sidebar" aria-label="Open sidebar" onClick={() => setSidebarOpen(true)} className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-border bg-surface text-muted-foreground transition hover:border-primary/35 hover:bg-muted hover:text-primary focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/25"><Icon name="menu" /></button> : null}<div className="min-w-0"><p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">Admin Dashboard</p><h1 className="truncate text-2xl font-semibold tracking-tight text-foreground">{title}</h1></div></div>
               <div className="flex flex-wrap gap-2"><Button type="button" variant="secondary" className="h-10 min-h-10 gap-2 px-4 py-2" onClick={loadSubmissions}><Icon name="refresh" />Refresh</Button><Button type="button" variant="ghost" className="h-10 min-h-10 gap-2 px-4 py-2" onClick={signOut}><Icon name="logout" />Sign Out</Button></div>
             </div>
           </header>
@@ -363,6 +363,12 @@ function ContactTable({ rows, total }: { rows: ContactSubmission[]; total: numbe
 function AssessmentTable({ rows, total }: { rows: AssessmentSubmission[]; total: number }) {
   return <section className="overflow-hidden rounded-lg border border-border bg-surface shadow-sm"><div className="flex items-center justify-between gap-3 border-b border-border px-4 py-3"><div><h2 className="font-semibold text-foreground">Assessment Submissions</h2><p className="text-sm text-muted-foreground">Showing {rows.length} of {total}</p></div><Button type="button" variant="secondary" className="h-9 min-h-9 gap-2 px-3 py-1.5 text-xs" onClick={() => exportAssessments(rows)} disabled={!rows.length}><Icon name="download" />Export XLS</Button></div>{rows.length ? <div className="max-h-[68vh] overflow-auto"><table className="w-full min-w-[1650px] border-collapse"><thead className="sticky top-0 z-10"><tr><th className={thClass}>Date</th><th className={thClass}>Name</th><th className={thClass}>Email</th><th className={thClass}>Phone</th><th className={thClass}>Company</th><th className={thClass}>Website</th><th className={thClass}>Industry</th><th className={thClass}>Size</th><th className={thClass}>Tools</th><th className={thClass}>Challenges</th><th className={thClass}>Automation</th><th className={thClass}>Additional</th><th className={thClass}>Status</th></tr></thead><tbody>{rows.map((item) => <tr key={item.id} className="transition hover:bg-muted/60"><td className={`${tdClass} whitespace-nowrap`}>{formatDate(item.created_at)}</td><td className={`${tdClass} font-semibold text-foreground`}>{item.name}</td><td className={tdClass}>{item.email}</td><td className={tdClass}>{item.phone || "Not provided"}</td><td className={`${tdClass} font-semibold text-foreground`}>{item.company}</td><td className={tdClass}>{item.website ? <a href={item.website} target="_blank" rel="noopener noreferrer" className="font-medium text-primary underline-offset-4 hover:underline">{item.website}</a> : "Not provided"}</td><td className={tdClass}>{item.industry}</td><td className={tdClass}>{item.company_size || "Not provided"}</td><td className={`${tdClass} min-w-56`}>{item.existing_tools || "Not provided"}</td><td className={`${tdClass} min-w-96`}><p className="line-clamp-4 leading-6">{item.challenges}</p></td><td className={`${tdClass} min-w-80`}><p className="line-clamp-4 leading-6">{item.automation_areas || "Not provided"}</p></td><td className={`${tdClass} min-w-72`}><p className="line-clamp-3 leading-6">{item.additional_info || "Not provided"}</p></td><td className={tdClass}><StatusBadge status={item.status} /></td></tr>)}</tbody></table></div> : <div className="border-t border-border px-4 py-10 text-center text-sm text-muted-foreground">No assessment submissions match the selected filters.</div>}</section>;
 }
+
+
+
+
+
+
 
 
 
