@@ -14,15 +14,15 @@ export function BrandLogo({ className = "", imageClassName = "h-11 w-36", priori
   return (
     <span className={`flex min-w-0 items-center gap-3 ${className}`}>
       {mode === "dark" ? (
-        <Image src="/iamm-logo-dark.png" alt="IAMM" width={144} height={48} priority={priority} className={imageClasses} />
+        <Image src="/newfinallogo.png" alt="IAMM" width={144} height={48} priority={priority} className={imageClasses} />
       ) : null}
       {mode === "light" ? (
-        <Image src="/iamm-footer-logo.png" alt="IAMM" width={144} height={48} priority={priority} className={imageClasses} />
+        <Image src="/newfinallogo.png" alt="IAMM" width={144} height={48} priority={priority} className={imageClasses} />
       ) : null}
       {mode === "auto" ? (
         <>
-          <Image src="/iamm-footer-logo.png" alt="IAMM" width={144} height={48} priority={priority} className={`${imageClasses} dark:hidden`} />
-          <Image src="/iamm-logo-dark.png" alt="IAMM" width={144} height={48} priority={priority} className={`${imageClasses} hidden dark:block`} />
+          <Image src="/newfinallogo.png" alt="IAMM" width={144} height={48} priority={priority} className={`${imageClasses} dark:hidden`} />
+          <Image src="/newfinallogo.png" alt="IAMM" width={144} height={48} priority={priority} className={`${imageClasses} hidden dark:block`} />
         </>
       ) : null}
       {showAdminLabel ? <span className="shrink-0 text-xs text-muted-foreground">Admin</span> : null}
