@@ -2,9 +2,9 @@
 
 :root {
   color-scheme: light;
-  --primary: #2563eb;
-  --secondary: #0b1120;
-  --accent: #38bdf8;
+  --primary: #4f8df7;
+  --secondary: #111827;
+  --accent: #7dd3fc;
   --background: #f8fafc;
   --surface: #ffffff;
   --foreground: #0f172a;
@@ -17,6 +17,8 @@
 
 .dark {
   color-scheme: dark;
+  --primary: #7dd3fc;
+  --accent: #bae6fd;
   --background: #020617;
   --surface: #0b1120;
   --foreground: #f8fafc;
@@ -144,7 +146,7 @@ html {
 }
 
 .dark {
-  scrollbar-color: #38bdf8 #020617;
+  scrollbar-color: #7dd3fc #020617;
 }
 
 ::-webkit-scrollbar {
@@ -168,10 +170,10 @@ html {
 
 .dark ::-webkit-scrollbar-thumb {
   border-color: #020617;
-  background: linear-gradient(180deg, #38bdf8, #2563eb);
+  background: linear-gradient(180deg, #bae6fd, #7dd3fc);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #2563eb;
+  background: #4f8df7;
 }
 

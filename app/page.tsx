@@ -140,7 +140,7 @@ export default function Home() {
         <div className="absolute inset-x-0 top-1/2 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
         <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
           <SectionHeading
-            eyebrow="How IAMM works"
+            eyebrow="How IAMM works" 
             title="From Problem to Progress."
             description="A practical process for turning business friction into intelligent systems your team can trust."
             align="center"

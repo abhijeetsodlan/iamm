@@ -11,7 +11,7 @@ type BaseProps = {
 
 const variants: Record<Variant, string> = {
   primary:
-    "bg-primary text-white shadow-sm shadow-primary/20 hover:bg-primary/90 focus-visible:ring-primary/35",
+    "bg-primary text-secondary shadow-sm shadow-primary/20 hover:bg-primary/90 focus-visible:ring-primary/35",
   secondary:
     "border border-border bg-surface text-foreground hover:border-primary/35 hover:bg-primary/5 focus-visible:ring-primary/25",
   ghost:
