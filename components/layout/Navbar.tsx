@@ -1,8 +1,9 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
+import { BrandLogo } from "@/components/ui/BrandLogo";
 import { ButtonLink } from "@/components/ui/Button";
 import { siteConfig } from "@/lib/site";
 
@@ -80,11 +81,8 @@ export function Navbar() {
               <BackIcon />
             </button>
           ) : null}
-          <Link href="/" onClick={closeMenu} className="flex items-center gap-3 font-semibold text-foreground">
-            <span className="flex h-9 w-9 items-center justify-center rounded-md bg-secondary text-sm font-bold text-white ring-1 ring-white/10 dark:bg-primary">
-              IA
-            </span>
-            <span className="text-lg tracking-tight">IAMM</span>
+          <Link href="/" onClick={closeMenu} className="flex items-center font-semibold text-foreground">
+            <BrandLogo priority imageClassName="h-11 w-36" />
           </Link>
         </div>
 
@@ -150,3 +148,7 @@ export function Navbar() {
     </header>
   );
 }
+
+
+
+

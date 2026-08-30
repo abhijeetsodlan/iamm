@@ -1,4 +1,4 @@
-import { ButtonLink } from "@/components/ui/Button";
+﻿import { ButtonLink } from "@/components/ui/Button";
 
 type ServiceCardProps = {
   icon: string;
@@ -33,7 +33,12 @@ export function ServiceCard({
         {icon}
       </div>
       <h3 className="text-pretty text-xl font-semibold text-foreground">{preventWidow(title)}</h3>
-      <p className="mt-3 text-pretty leading-7 text-muted-foreground">{preventWidow(description)}</p>
+      <p className={`mt-3 text-pretty leading-7 text-muted-foreground ${detailed ? "" : "line-clamp-3"}`}>{preventWidow(description)}</p>
+      {!detailed ? (
+        <ButtonLink href="/services" variant="ghost" className="mt-5 px-0 hover:bg-transparent">
+          Learn more
+        </ButtonLink>
+      ) : null}
       {detailed ? (
         <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
           <div>
@@ -60,9 +65,9 @@ export function ServiceCard({
           </div>
         </div>
       ) : null}
-      <ButtonLink href="/services" variant="ghost" className="mt-5 px-0 hover:bg-transparent">
-        Learn more
-      </ButtonLink>
     </article>
   );
 }
+
+
+

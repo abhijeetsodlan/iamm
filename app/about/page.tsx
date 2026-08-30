@@ -1,18 +1,20 @@
-import type { Metadata } from "next";
-import { CtaBand } from "@/components/ui/CtaBand";
+﻿import { CtaBand } from "@/components/ui/CtaBand";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { createMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "About",
-  description: "Learn about IAMM's practical approach to AI automation, workflow improvement, and digital solutions.",
-};
+export const metadata = createMetadata({
+  title: "About IAMM",
+  description: "Learn how IAMM helps businesses identify practical AI automation opportunities, improve workflows, and implement digital systems that support growth.",
+  path: "/about",
+  keywords: ["AI automation partner", "business workflow consulting", "automation strategy"],
+});
 
 const approach = ["Understand", "Analyze", "Build", "Implement", "Optimize"];
 const why = [
   "Business-first recommendations before tools or models are selected.",
   "Clean implementation plans designed for international B2B teams.",
   "Practical automation that improves how work actually moves through the company.",
-  "A frontend and architecture foundation prepared for future backend integration.",
+  "Implementation-minded systems designed to connect cleanly with real business tools.",
 ];
 
 export default function AboutPage() {
@@ -64,3 +66,4 @@ export default function AboutPage() {
     </>
   );
 }
+

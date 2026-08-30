@@ -1,10 +1,18 @@
-import { AiVisual } from "@/components/home/AiVisual";
+﻿import { AiVisual } from "@/components/home/AiVisual";
 import { ButtonLink } from "@/components/ui/Button";
 import { CtaBand } from "@/components/ui/CtaBand";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ScrollToTop } from "@/components/ui/ScrollToTop";
 import { ServiceCard } from "@/components/ui/ServiceCard";
 import { services } from "@/lib/site";
+import { createMetadata } from "@/lib/seo";
+
+export const metadata = createMetadata({
+  title: "AI Automation & Business Workflow Solutions",
+  description: "IAMM helps modern businesses automate repetitive work, integrate AI into existing tools, optimize workflows, and build practical digital systems for growth.",
+  path: "/",
+  keywords: ["AI automation company", "business automation solutions", "AI workflow automation"],
+});
 
 const values = [
   [
@@ -202,6 +210,8 @@ export default function Home() {
     </>
   );
 }
+
+
 
 
 

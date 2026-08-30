@@ -1,4 +1,5 @@
-import Link from "next/link";
+﻿import Link from "next/link";
+import { BrandLogo } from "@/components/ui/BrandLogo";
 import { SocialLinks } from "@/components/ui/SocialLinks";
 import { services, siteConfig } from "@/lib/site";
 
@@ -7,9 +8,8 @@ export function Footer() {
     <footer className="border-t border-border bg-secondary text-white">
       <div className="mx-auto grid max-w-7xl gap-10 px-6 py-14 sm:grid-cols-2 lg:grid-cols-4 lg:px-8">
         <div className="sm:col-span-2 lg:col-span-1">
-          <Link href="/" className="flex items-center gap-3 font-semibold">
-            <span className="flex h-9 w-9 items-center justify-center rounded-md bg-primary text-sm font-bold">IA</span>
-            <span className="text-lg">IAMM</span>
+          <Link href="/" className="inline-flex items-center font-semibold">
+            <BrandLogo mode="dark" imageClassName="h-12 w-40" />
           </Link>
           <p className="mt-5 max-w-sm text-sm leading-6 text-white/65">
             AI, automation, and digital solutions for businesses that want practical systems, cleaner workflows, and scalable operations.
@@ -50,3 +50,4 @@ export function Footer() {
     </footer>
   );
 }
+

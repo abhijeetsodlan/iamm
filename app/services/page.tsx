@@ -1,13 +1,15 @@
-import type { Metadata } from "next";
-import { CtaBand } from "@/components/ui/CtaBand";
+﻿import { CtaBand } from "@/components/ui/CtaBand";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ServiceCard } from "@/components/ui/ServiceCard";
 import { services } from "@/lib/site";
+import { createMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Services",
-  description: "Explore IAMM services across AI automation, workflow optimization, integration, and digital transformation.",
-};
+export const metadata = createMetadata({
+  title: "AI Automation Services",
+  description: "Explore IAMM services for AI automation, business process automation, AI integration, workflow optimization, custom AI solutions, and digital transformation.",
+  path: "/services",
+  keywords: ["AI automation services", "AI integration services", "business process automation services"],
+});
 
 export default function ServicesPage() {
   return (

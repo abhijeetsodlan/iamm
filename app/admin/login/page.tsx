@@ -1,10 +1,12 @@
-﻿import type { Metadata } from "next";
-import { AdminLoginForm } from "@/components/admin/AdminLoginForm";
+﻿import { AdminLoginForm } from "@/components/admin/AdminLoginForm";
+import { createMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = createMetadata({
   title: "Admin Login",
   description: "Sign in to the IAMM admin dashboard.",
-};
+  path: "/admin/login",
+  noIndex: true,
+});
 
 export default function AdminLoginPage() {
   return (
@@ -12,7 +14,6 @@ export default function AdminLoginPage() {
       <div className="mx-auto max-w-md px-6">
         <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Admin</p>
         <h1 className="mt-2 text-3xl font-semibold tracking-tight text-foreground">Sign in</h1>
-        <p className="mt-3 text-sm leading-6 text-muted-foreground">Use your Supabase Auth admin account to view form submissions.</p>
         <div className="mt-8">
           <AdminLoginForm />
         </div>

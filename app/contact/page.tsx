@@ -1,20 +1,22 @@
-import type { Metadata } from "next";
-import { ContactForm } from "@/components/forms/ContactForm";
+﻿import { ContactForm } from "@/components/forms/ContactForm";
 import { ButtonLink } from "@/components/ui/Button";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SocialLinks } from "@/components/ui/SocialLinks";
+import { createMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Contact",
-  description: "Contact IAMM about AI automation, workflow optimization, or a business assessment.",
-};
+export const metadata = createMetadata({
+  title: "Contact IAMM",
+  description: "Contact IAMM to discuss AI automation, workflow optimization, business process automation, AI integrations, or a free business assessment.",
+  path: "/contact",
+  keywords: ["contact AI automation company", "AI automation consultation", "workflow automation consultation"],
+});
 
 export default function ContactPage() {
   return (
     <main className="py-8 sm:py-16 lg:py-24">
       <div className="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-[0.9fr_1.1fr] lg:px-8">
         <div className="order-1 lg:order-1">
-          <SectionHeading eyebrow="Contact" title="Talk to IAMM about your next intelligent workflow." description="Share what you are trying to improve. This frontend form is structured for future API or Supabase integration." />
+          <SectionHeading eyebrow="Contact" title="Talk to IAMM about your next intelligent workflow." description="Share what you are trying to improve. IAMM will review your message and help identify practical automation opportunities." />
         </div>
         <div className="order-2 lg:order-2 lg:row-span-2">
           <ContactForm />

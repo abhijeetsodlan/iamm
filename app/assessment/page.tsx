@@ -1,18 +1,20 @@
-import type { Metadata } from "next";
-import { AssessmentForm } from "@/components/forms/AssessmentForm";
+﻿import { AssessmentForm } from "@/components/forms/AssessmentForm";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { createMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = createMetadata({
   title: "Free AI Business Assessment",
-  description: "Submit a frontend-only AI business assessment request for IAMM to review in a future backend phase.",
-};
+  description: "Request a free IAMM AI business assessment to identify automation opportunities, workflow bottlenecks, integration needs, and high-value process improvements.",
+  path: "/assessment",
+  keywords: ["free AI assessment", "AI business assessment", "automation assessment"],
+});
 
 export default function AssessmentPage() {
   return (
     <main className="py-8 sm:py-16 lg:py-24">
       <div className="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-[0.85fr_1.15fr] lg:px-8">
         <div className="order-1 lg:order-1">
-          <SectionHeading eyebrow="Free assessment" title="Discover where AI can improve your business." description="Use this structured assessment to describe your team, tools, bottlenecks, and automation goals. Backend submission will be connected later." />
+          <SectionHeading eyebrow="Free assessment" title="Discover where AI can improve your business." description="Use this structured assessment to describe your team, tools, bottlenecks, and automation goals. IAMM will review your details and identify practical next steps." />
         </div>
         <div className="order-2 lg:order-2 lg:row-span-2">
           <AssessmentForm />
