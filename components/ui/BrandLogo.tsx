@@ -17,11 +17,11 @@ export function BrandLogo({ className = "", imageClassName = "h-11 w-36", priori
         <Image src="/iamm-logo-dark.png" alt="IAMM" width={144} height={48} priority={priority} className={imageClasses} />
       ) : null}
       {mode === "light" ? (
-        <Image src="/iamm-logo-light.png" alt="IAMM" width={144} height={48} priority={priority} className={imageClasses} />
+        <Image src="/iamm-footer-logo.png" alt="IAMM" width={144} height={48} priority={priority} className={imageClasses} />
       ) : null}
       {mode === "auto" ? (
         <>
-          <Image src="/iamm-logo-light.png" alt="IAMM" width={144} height={48} priority={priority} className={`${imageClasses} dark:hidden`} />
+          <Image src="/iamm-footer-logo.png" alt="IAMM" width={144} height={48} priority={priority} className={`${imageClasses} dark:hidden`} />
           <Image src="/iamm-logo-dark.png" alt="IAMM" width={144} height={48} priority={priority} className={`${imageClasses} hidden dark:block`} />
         </>
       ) : null}
@@ -29,4 +29,5 @@ export function BrandLogo({ className = "", imageClassName = "h-11 w-36", priori
     </span>
   );
 }
+
 
