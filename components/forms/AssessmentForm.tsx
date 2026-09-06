@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { FormEvent, useState } from "react";
 import { supabase } from "@/lib/supabase";
@@ -34,7 +34,7 @@ function ToastMessage({ toast }: { toast: Toast | null }) {
 
 function showSupabaseError(message: string) {
   if (message.includes("row-level security")) {
-    return "Assessment could not be saved because Supabase insert permission is not enabled for this table.";
+    return "Assessment could not be submitted right now. Please try again later.";
   }
 
   return message;
@@ -66,7 +66,6 @@ export function AssessmentForm() {
       phone: String(formData.get("phone") || "").trim() || null,
       website: String(formData.get("website") || "").trim() || null,
       industry: String(formData.get("industry") || "").trim(),
-      company_size: String(formData.get("companySize") || "").trim() || null,
       existing_tools: String(formData.get("tools") || "").trim() || null,
       challenges: String(formData.get("challenges") || "").trim(),
       automation_areas: String(formData.get("automationAreas") || "").trim() || null,
@@ -83,7 +82,7 @@ export function AssessmentForm() {
     }
 
     form.reset();
-    setToast({ type: "success", message: "Assessment saved successfully." });
+    setToast({ type: "success", message: "Assessment submitted successfully." });
     setSubmitted(true);
   }
 
@@ -92,9 +91,9 @@ export function AssessmentForm() {
       <div className="rounded-lg border border-success/25 bg-success/10 p-8">
         <h2 className="text-2xl font-semibold text-foreground">Assessment sent</h2>
         <p className="mt-3 leading-7 text-muted-foreground">
-          Your assessment has been saved and will appear in the admin dashboard.
+          Thank you for sharing your details. IAMM will review your assessment and follow up with practical next steps.
         </p>
-        <Button className="mt-6" onClick={() => { setSubmitted(false); setToast(null); }}>Submit another assessment</Button>
+        <Button className="mt-6" onClick={() => { setSubmitted(false); setToast(null); }}>Submit another request</Button>
       </div>
     );
   }
@@ -108,7 +107,6 @@ export function AssessmentForm() {
         <label className={labelClass}>Phone<input type="tel" name="phone" className={inputClass} placeholder="Optional phone number" /></label>
         <label className={labelClass}>Website<input type="url" name="website" className={inputClass} placeholder="https://company.com" /></label>
         <label className={labelClass}>Industry <span className="text-error">*</span><input required name="industry" className={inputClass} placeholder="Healthcare, finance, services..." /></label>
-        <label className={labelClass}>Company size<select name="companySize" className={inputClass} defaultValue=""><option value="" disabled>Select size</option><option>1-10</option><option>11-50</option><option>51-200</option><option>201-1000</option><option>1000+</option></select></label>
         <label className={labelClass}>Existing tools<input name="tools" className={inputClass} placeholder="CRM, spreadsheets, helpdesk, ERP..." /></label>
       </div>
       <label className={labelClass}>Current business challenges <span className="text-error">*</span><textarea required name="challenges" className={`${inputClass} min-h-32`} placeholder="Where is work slow, repetitive, manual, or difficult to track?" /></label>

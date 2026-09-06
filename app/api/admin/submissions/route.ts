@@ -34,7 +34,7 @@ export async function GET(request: NextRequest) {
         .order("created_at", { ascending: false }),
       supabase
         .from("assessment_submissions")
-        .select("id,name,company,email,phone,website,industry,company_size,existing_tools,challenges,automation_areas,additional_info,status,source,created_at,updated_at")
+        .select("id,name,company,email,phone,website,industry,existing_tools,challenges,automation_areas,additional_info,status,source,created_at,updated_at")
         .order("created_at", { ascending: false }),
     ]);
 

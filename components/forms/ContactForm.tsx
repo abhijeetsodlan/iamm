@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { FormEvent, useState } from "react";
 import { supabase } from "@/lib/supabase";
@@ -34,7 +34,7 @@ function ToastMessage({ toast }: { toast: Toast | null }) {
 
 function showSupabaseError(message: string) {
   if (message.includes("row-level security")) {
-    return "Message could not be saved because Supabase insert permission is not enabled for this table.";
+    return "Message could not be submitted right now. Please try again later.";
   }
 
   return message;
@@ -77,7 +77,7 @@ export function ContactForm() {
     }
 
     form.reset();
-    setToast({ type: "success", message: "Message saved successfully." });
+    setToast({ type: "success", message: "Message sent successfully." });
     setSubmitted(true);
   }
 
@@ -86,7 +86,7 @@ export function ContactForm() {
       <div className="rounded-lg border border-success/25 bg-success/10 p-8">
         <h2 className="text-2xl font-semibold text-foreground">Message sent</h2>
         <p className="mt-3 leading-7 text-muted-foreground">
-          Thanks for contacting IAMM. Your message has been saved and will appear in the admin dashboard.
+          Thanks for contacting IAMM. Your message has been received, and the team will follow up soon.
         </p>
         <Button className="mt-6" onClick={() => { setSubmitted(false); setToast(null); }}>Send another message</Button>
       </div>

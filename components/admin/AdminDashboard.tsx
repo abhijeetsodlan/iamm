@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -25,7 +25,6 @@ type AssessmentSubmission = {
   phone: string | null;
   website: string | null;
   industry: string;
-  company_size: string | null;
   existing_tools: string | null;
   challenges: string;
   automation_areas: string | null;
@@ -49,7 +48,6 @@ type Filters = {
   fromDate: string;
   toDate: string;
   industry: string;
-  companySize: string;
 };
 
 const defaultFilters: Filters = {
@@ -58,7 +56,6 @@ const defaultFilters: Filters = {
   fromDate: "",
   toDate: "",
   industry: "all",
-  companySize: "all",
 };
 
 const inputClass = "h-9 w-full rounded-md border border-border bg-background px-3 text-sm text-foreground outline-none transition placeholder:text-muted-foreground/70 focus:border-primary focus:bg-surface focus:ring-4 focus:ring-primary/15";
@@ -162,7 +159,6 @@ function exportAssessments(rows: AssessmentSubmission[]) {
     { label: "Company", width: 220 },
     { label: "Website", width: 260 },
     { label: "Industry", width: 180 },
-    { label: "Company Size", width: 140 },
     { label: "Existing Tools", width: 320 },
     { label: "Challenges", width: 520 },
     { label: "Automation Areas", width: 440 },
@@ -176,7 +172,6 @@ function exportAssessments(rows: AssessmentSubmission[]) {
     sanitizeSheetValue(item.company),
     sanitizeSheetValue(item.website),
     sanitizeSheetValue(item.industry),
-    sanitizeSheetValue(item.company_size),
     sanitizeSheetValue(item.existing_tools),
     sanitizeSheetValue(item.challenges),
     sanitizeSheetValue(item.automation_areas),
@@ -207,24 +202,22 @@ function StatCard({ label, value }: { label: string; value: number }) {
   return <div className="rounded-lg border border-border bg-surface p-5 shadow-sm"><p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">{label}</p><p className="mt-2 text-3xl font-semibold text-foreground">{value}</p></div>;
 }
 
-function CompactFilters({ filters, statusOptions, industryOptions, companySizeOptions, view, onChange, onReset }: {
+function CompactFilters({ filters, statusOptions, industryOptions, view, onChange, onReset }: {
   filters: Filters;
   statusOptions: string[];
   industryOptions: string[];
-  companySizeOptions: string[];
   view: "contact" | "assessment";
   onChange: (key: keyof Filters, value: string) => void;
   onReset: () => void;
 }) {
   return (
     <section className="rounded-lg border border-border bg-surface p-3 shadow-sm">
-      <div className={`grid gap-2 md:grid-cols-2 ${view === "assessment" ? "xl:grid-cols-7" : "xl:grid-cols-5"}`}>
+      <div className={`grid gap-2 md:grid-cols-2 ${view === "assessment" ? "xl:grid-cols-6" : "xl:grid-cols-5"}`}>
         <label className={`${labelClass} ${view === "assessment" ? "xl:col-span-2" : "xl:col-span-1"}`}>Search<input value={filters.query} onChange={(event) => onChange("query", event.target.value)} className={inputClass} placeholder="Search..." /></label>
         <label className={labelClass}>Status<select value={filters.status} onChange={(event) => onChange("status", event.target.value)} className={inputClass}><option value="all">All</option>{statusOptions.map((status) => <option key={status}>{status}</option>)}</select></label>
         <label className={labelClass}>From<input type="date" value={filters.fromDate} onChange={(event) => onChange("fromDate", event.target.value)} className={inputClass} /></label>
         <label className={labelClass}>To<input type="date" value={filters.toDate} onChange={(event) => onChange("toDate", event.target.value)} className={inputClass} /></label>
         {view === "assessment" ? <label className={labelClass}>Industry<select value={filters.industry} onChange={(event) => onChange("industry", event.target.value)} className={inputClass}><option value="all">All</option>{industryOptions.map((industry) => <option key={industry}>{industry}</option>)}</select></label> : null}
-        {view === "assessment" ? <label className={labelClass}>Size<select value={filters.companySize} onChange={(event) => onChange("companySize", event.target.value)} className={inputClass}><option value="all">All</option>{companySizeOptions.map((size) => <option key={size}>{size}</option>)}</select></label> : null}
         <div className="flex items-end"><Button type="button" variant="secondary" className="h-9 min-h-9 w-full px-3 py-1.5 text-xs" onClick={onReset}>Reset</Button></div>
       </div>
     </section>
@@ -302,9 +295,8 @@ export function AdminDashboard({ view }: { view: AdminView }) {
 
   const statusOptions = useMemo(() => uniqueValues(view === "contact" ? data.contacts.map((item) => item.status) : data.assessments.map((item) => item.status)), [data.assessments, data.contacts, view]);
   const industryOptions = useMemo(() => uniqueValues(data.assessments.map((item) => item.industry)), [data.assessments]);
-  const companySizeOptions = useMemo(() => uniqueValues(data.assessments.map((item) => item.company_size)), [data.assessments]);
   const filteredContacts = useMemo(() => data.contacts.filter((item) => (filters.status === "all" || item.status === filters.status) && matchesDateRange(item.created_at, filters.fromDate, filters.toDate) && textMatches(filters.query, [item.name, item.email, item.company, item.subject, item.message])), [data.contacts, filters]);
-  const filteredAssessments = useMemo(() => data.assessments.filter((item) => (filters.status === "all" || item.status === filters.status) && (filters.industry === "all" || item.industry === filters.industry) && (filters.companySize === "all" || item.company_size === filters.companySize) && matchesDateRange(item.created_at, filters.fromDate, filters.toDate) && textMatches(filters.query, [item.name, item.company, item.email, item.phone, item.website, item.industry, item.company_size, item.existing_tools, item.challenges, item.automation_areas, item.additional_info])), [data.assessments, filters]);
+  const filteredAssessments = useMemo(() => data.assessments.filter((item) => (filters.status === "all" || item.status === filters.status) && (filters.industry === "all" || item.industry === filters.industry) && matchesDateRange(item.created_at, filters.fromDate, filters.toDate) && textMatches(filters.query, [item.name, item.company, item.email, item.phone, item.website, item.industry, item.existing_tools, item.challenges, item.automation_areas, item.additional_info])), [data.assessments, filters]);
 
   function updateFilter(key: keyof Filters, value: string) { setFilters((current) => ({ ...current, [key]: value })); }
   async function signOut() { await supabase.auth.signOut(); router.replace("/admin/login"); }
@@ -322,24 +314,24 @@ export function AdminDashboard({ view }: { view: AdminView }) {
 
   return (
     <main className="min-h-screen bg-background">
-      <div className={`grid min-h-screen transition-[grid-template-columns] duration-200 ${sidebarOpen ? "grid-cols-[220px_1fr] sm:grid-cols-[240px_1fr]" : "grid-cols-1"}`}>
-        {sidebarOpen ? <aside className="flex min-w-0 flex-col border-r border-border bg-surface shadow-sm">
+      <div className="grid min-h-screen grid-cols-1 transition-[grid-template-columns] duration-200 lg:grid-cols-[240px_1fr]">
+        <aside className={`${sidebarOpen ? "fixed inset-y-0 left-0 z-50 flex w-[220px]" : "hidden"} min-w-0 flex-col border-r border-border bg-surface shadow-sm lg:relative lg:inset-auto lg:z-auto lg:flex lg:w-auto`}>
           <div className="flex h-16 items-center justify-center border-b border-border px-3">
-            <button type="button" title="Close sidebar" aria-label="Close sidebar" onClick={() => setSidebarOpen(false)} className="flex h-11 w-full items-center justify-center rounded-md text-muted-foreground transition hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/25"><Icon name="menu" /></button>
+            <button type="button" title="Close sidebar" aria-label="Close sidebar" onClick={() => setSidebarOpen(false)} className="flex h-11 w-full items-center justify-center rounded-md text-muted-foreground transition hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/25 lg:hidden"><Icon name="menu" /></button>
           </div>
           <nav className="grid gap-1 p-3" aria-label="Admin navigation">
             {navItems.map((item) => {
               const active = pathname === item.href || (pathname === "/admin" && item.href === "/admin/analytics");
-              return <Link key={item.href} href={item.href} title={item.label} onClick={() => setSidebarOpen(false)} className={`flex h-11 items-center rounded-md text-sm font-semibold transition ${sidebarOpen ? "justify-between px-3" : "justify-center px-0"} ${active ? "bg-primary/10 text-primary ring-1 ring-primary/20" : "text-muted-foreground hover:bg-muted hover:text-foreground"}`}><span className="flex items-center gap-3"><Icon name={item.icon} />{sidebarOpen ? <span>{item.label}</span> : null}</span>{sidebarOpen ? <span className="rounded-full bg-muted px-2 py-0.5 text-xs text-muted-foreground">{item.count}</span> : null}</Link>;
+              return <Link key={item.href} href={item.href} title={item.label} onClick={() => setSidebarOpen(false)} className={`flex h-11 items-center justify-between rounded-md px-3 text-sm font-semibold transition ${active ? "bg-primary/10 text-primary ring-1 ring-primary/20" : "text-muted-foreground hover:bg-muted hover:text-foreground"}`}><span className="flex items-center gap-3"><Icon name={item.icon} /><span>{item.label}</span></span><span className="rounded-full bg-muted px-2 py-0.5 text-xs text-muted-foreground">{item.count}</span></Link>;
             })}
             <button type="button" onClick={signOut} className="mt-1 flex h-11 w-full items-center gap-3 rounded-md px-3 text-sm font-semibold text-error transition hover:bg-error/10 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-error/20"><Icon name="logout" />Sign Out</button>
           </nav>
-        </aside> : null}
+        </aside>
 
         <section className="min-w-0">
           <header className="sticky top-0 z-30 border-b border-border bg-surface/95 backdrop-blur">
             <div className="flex min-h-16 flex-col gap-3 px-5 py-4 sm:flex-row sm:items-center sm:justify-between lg:px-8">
-              <div className="flex min-w-0 items-center gap-3">{!sidebarOpen ? <button type="button" title="Open sidebar" aria-label="Open sidebar" onClick={() => setSidebarOpen(true)} className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-border bg-surface text-muted-foreground transition hover:border-primary/35 hover:bg-muted hover:text-primary focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/25"><Icon name="menu" /></button> : null}<div className="min-w-0"><p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">Admin Dashboard</p><h1 className="truncate text-2xl font-semibold tracking-tight text-foreground">{title}</h1></div></div>
+              <div className="flex min-w-0 items-center gap-3">{!sidebarOpen ? <button type="button" title="Open sidebar" aria-label="Open sidebar" onClick={() => setSidebarOpen(true)} className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-border bg-surface text-muted-foreground transition hover:border-primary/35 hover:bg-muted hover:text-primary focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/25 lg:hidden"><Icon name="menu" /></button> : null}<div className="min-w-0"><p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">Admin Dashboard</p><h1 className="truncate text-2xl font-semibold tracking-tight text-foreground">{title}</h1></div></div>
               <div className="flex flex-wrap gap-2"><Button type="button" variant="secondary" className="h-10 min-h-10 gap-2 px-4 py-2" onClick={loadSubmissions}><Icon name="refresh" />Refresh</Button></div>
             </div>
           </header>
@@ -348,8 +340,8 @@ export function AdminDashboard({ view }: { view: AdminView }) {
             {loading ? <div className="rounded-lg border border-border bg-surface p-6 text-sm text-muted-foreground shadow-sm">Loading submissions...</div> : null}
             {error ? <div className="rounded-lg border border-error/25 bg-error/10 p-4 text-sm text-error">{error}</div> : null}
             {!loading && !error && view === "analytics" ? <AnalyticsPanel data={data} /> : null}
-            {!loading && !error && view === "contact" ? <><CompactFilters filters={filters} statusOptions={statusOptions} industryOptions={industryOptions} companySizeOptions={companySizeOptions} view="contact" onChange={updateFilter} onReset={() => setFilters(defaultFilters)} /><ContactTable rows={filteredContacts} total={data.contacts.length} /></> : null}
-            {!loading && !error && view === "assessment" ? <><CompactFilters filters={filters} statusOptions={statusOptions} industryOptions={industryOptions} companySizeOptions={companySizeOptions} view="assessment" onChange={updateFilter} onReset={() => setFilters(defaultFilters)} /><AssessmentTable rows={filteredAssessments} total={data.assessments.length} /></> : null}
+            {!loading && !error && view === "contact" ? <><CompactFilters filters={filters} statusOptions={statusOptions} industryOptions={industryOptions} view="contact" onChange={updateFilter} onReset={() => setFilters(defaultFilters)} /><ContactTable rows={filteredContacts} total={data.contacts.length} /></> : null}
+            {!loading && !error && view === "assessment" ? <><CompactFilters filters={filters} statusOptions={statusOptions} industryOptions={industryOptions} view="assessment" onChange={updateFilter} onReset={() => setFilters(defaultFilters)} /><AssessmentTable rows={filteredAssessments} total={data.assessments.length} /></> : null}
           </div>
         </section>
       </div>
@@ -362,8 +354,9 @@ function ContactTable({ rows, total }: { rows: ContactSubmission[]; total: numbe
 }
 
 function AssessmentTable({ rows, total }: { rows: AssessmentSubmission[]; total: number }) {
-  return <section className="overflow-hidden rounded-lg border border-border bg-surface shadow-sm"><div className="flex items-center justify-between gap-3 border-b border-border px-4 py-3"><div><h2 className="font-semibold text-foreground">Assessment Submissions</h2><p className="text-sm text-muted-foreground">Showing {rows.length} of {total}</p></div><Button type="button" variant="secondary" className="h-9 min-h-9 gap-2 px-3 py-1.5 text-xs" onClick={() => exportAssessments(rows)} disabled={!rows.length}><Icon name="download" />Export XLS</Button></div>{rows.length ? <div className="max-h-[68vh] overflow-auto"><table className="w-full min-w-[1650px] border-collapse"><thead className="sticky top-0 z-10"><tr><th className={thClass}>Date</th><th className={thClass}>Name</th><th className={thClass}>Email</th><th className={thClass}>Phone</th><th className={thClass}>Company</th><th className={thClass}>Website</th><th className={thClass}>Industry</th><th className={thClass}>Size</th><th className={thClass}>Tools</th><th className={thClass}>Challenges</th><th className={thClass}>Automation</th><th className={thClass}>Additional</th><th className={thClass}>Status</th></tr></thead><tbody>{rows.map((item) => <tr key={item.id} className="transition hover:bg-muted/60"><td className={`${tdClass} whitespace-nowrap`}>{formatDate(item.created_at)}</td><td className={`${tdClass} font-semibold text-foreground`}>{item.name}</td><td className={tdClass}>{item.email}</td><td className={tdClass}>{item.phone || "Not provided"}</td><td className={`${tdClass} font-semibold text-foreground`}>{item.company}</td><td className={tdClass}>{item.website ? <a href={item.website} target="_blank" rel="noopener noreferrer" className="font-medium text-primary underline-offset-4 hover:underline">{item.website}</a> : "Not provided"}</td><td className={tdClass}>{item.industry}</td><td className={tdClass}>{item.company_size || "Not provided"}</td><td className={`${tdClass} min-w-56`}>{item.existing_tools || "Not provided"}</td><td className={`${tdClass} min-w-96`}><p className="line-clamp-4 leading-6">{item.challenges}</p></td><td className={`${tdClass} min-w-80`}><p className="line-clamp-4 leading-6">{item.automation_areas || "Not provided"}</p></td><td className={`${tdClass} min-w-72`}><p className="line-clamp-3 leading-6">{item.additional_info || "Not provided"}</p></td><td className={tdClass}><StatusBadge status={item.status} /></td></tr>)}</tbody></table></div> : <div className="border-t border-border px-4 py-10 text-center text-sm text-muted-foreground">No assessment submissions match the selected filters.</div>}</section>;
+  return <section className="overflow-hidden rounded-lg border border-border bg-surface shadow-sm"><div className="flex items-center justify-between gap-3 border-b border-border px-4 py-3"><div><h2 className="font-semibold text-foreground">Assessment Submissions</h2><p className="text-sm text-muted-foreground">Showing {rows.length} of {total}</p></div><Button type="button" variant="secondary" className="h-9 min-h-9 gap-2 px-3 py-1.5 text-xs" onClick={() => exportAssessments(rows)} disabled={!rows.length}><Icon name="download" />Export XLS</Button></div>{rows.length ? <div className="max-h-[68vh] overflow-auto"><table className="w-full min-w-[1510px] border-collapse"><thead className="sticky top-0 z-10"><tr><th className={thClass}>Date</th><th className={thClass}>Name</th><th className={thClass}>Email</th><th className={thClass}>Phone</th><th className={thClass}>Company</th><th className={thClass}>Website</th><th className={thClass}>Industry</th><th className={thClass}>Tools</th><th className={thClass}>Challenges</th><th className={thClass}>Automation</th><th className={thClass}>Additional</th><th className={thClass}>Status</th></tr></thead><tbody>{rows.map((item) => <tr key={item.id} className="transition hover:bg-muted/60"><td className={`${tdClass} whitespace-nowrap`}>{formatDate(item.created_at)}</td><td className={`${tdClass} font-semibold text-foreground`}>{item.name}</td><td className={tdClass}>{item.email}</td><td className={tdClass}>{item.phone || "Not provided"}</td><td className={`${tdClass} font-semibold text-foreground`}>{item.company}</td><td className={tdClass}>{item.website ? <a href={item.website} target="_blank" rel="noopener noreferrer" className="font-medium text-primary underline-offset-4 hover:underline">{item.website}</a> : "Not provided"}</td><td className={tdClass}>{item.industry}</td><td className={`${tdClass} min-w-56`}>{item.existing_tools || "Not provided"}</td><td className={`${tdClass} min-w-96`}><p className="line-clamp-4 leading-6">{item.challenges}</p></td><td className={`${tdClass} min-w-80`}><p className="line-clamp-4 leading-6">{item.automation_areas || "Not provided"}</p></td><td className={`${tdClass} min-w-72`}><p className="line-clamp-3 leading-6">{item.additional_info || "Not provided"}</p></td><td className={tdClass}><StatusBadge status={item.status} /></td></tr>)}</tbody></table></div> : <div className="border-t border-border px-4 py-10 text-center text-sm text-muted-foreground">No assessment submissions match the selected filters.</div>}</section>;
 }
+
 
 
 
