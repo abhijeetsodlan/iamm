@@ -1,4 +1,4 @@
-﻿import Link from "next/link";
+import Link from "next/link";
 import { BrandLogo } from "@/components/ui/BrandLogo";
 import { SocialLinks } from "@/components/ui/SocialLinks";
 import { services, siteConfig } from "@/lib/site";
@@ -15,7 +15,7 @@ export function Footer() {
             AI, automation, and digital solutions for businesses that want practical systems, cleaner workflows, and scalable operations.
           </p>
           <div className="mt-6">
-            <SocialLinks variant="dark" />
+            <SocialLinks variant="dark" showLabels />
           </div>
         </div>
         <div>
@@ -50,4 +50,5 @@ export function Footer() {
     </footer>
   );
 }
+
 

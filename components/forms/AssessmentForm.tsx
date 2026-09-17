@@ -41,7 +41,6 @@ function showSupabaseError(message: string) {
 }
 
 export function AssessmentForm() {
-  const [submitted, setSubmitted] = useState(false);
   const [toast, setToast] = useState<Toast | null>(null);
   const [pending, setPending] = useState(false);
 
@@ -82,20 +81,7 @@ export function AssessmentForm() {
     }
 
     form.reset();
-    setToast({ type: "success", message: "Assessment submitted successfully." });
-    setSubmitted(true);
-  }
-
-  if (submitted) {
-    return (
-      <div className="rounded-lg border border-success/25 bg-success/10 p-8">
-        <h2 className="text-2xl font-semibold text-foreground">Assessment sent</h2>
-        <p className="mt-3 leading-7 text-muted-foreground">
-          Thank you for sharing your details. IAMM will review your assessment and follow up with practical next steps.
-        </p>
-        <Button className="mt-6" onClick={() => { setSubmitted(false); setToast(null); }}>Submit another request</Button>
-      </div>
-    );
+    setToast({ type: "success", message: "Your assessment has been saved. IAMM will review it and follow up soon." });
   }
 
   return (
@@ -119,3 +105,4 @@ export function AssessmentForm() {
     </form>
   );
 }
+

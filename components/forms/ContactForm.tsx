@@ -41,7 +41,6 @@ function showSupabaseError(message: string) {
 }
 
 export function ContactForm() {
-  const [submitted, setSubmitted] = useState(false);
   const [toast, setToast] = useState<Toast | null>(null);
   const [pending, setPending] = useState(false);
 
@@ -77,20 +76,7 @@ export function ContactForm() {
     }
 
     form.reset();
-    setToast({ type: "success", message: "Message sent successfully." });
-    setSubmitted(true);
-  }
-
-  if (submitted) {
-    return (
-      <div className="rounded-lg border border-success/25 bg-success/10 p-8">
-        <h2 className="text-2xl font-semibold text-foreground">Message sent</h2>
-        <p className="mt-3 leading-7 text-muted-foreground">
-          Thanks for contacting IAMM. Your message has been received, and the team will follow up soon.
-        </p>
-        <Button className="mt-6" onClick={() => { setSubmitted(false); setToast(null); }}>Send another message</Button>
-      </div>
-    );
+    setToast({ type: "success", message: "Your message has been saved. IAMM will follow up soon." });
   }
 
   return (
@@ -107,3 +93,4 @@ export function ContactForm() {
     </form>
   );
 }
+
