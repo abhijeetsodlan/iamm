@@ -33,21 +33,18 @@ const values = [
   ],
 ];
 
-const sampleTestimonials = [
+const businessNeeds = [
   {
-    role: "Finance Manager",
-    context: "Invoice processing",
-    quote: "Our team used to spend so much time copying invoice details and chasing approvals. Having everything ready for review in one place would make our day so much easier.",
+    title: "Invoice processing",
+    description: "Bring invoice details and approval steps into a connected workflow, with human review where it matters.",
   },
   {
-    role: "Sales Team Lead",
-    context: "Lead management",
-    quote: "Knowing every inquiry has an owner and a follow-up is exactly what we need. Less time checking spreadsheets means more time having real conversations with customers.",
+    title: "Lead management",
+    description: "Connect enquiries, ownership, and follow-ups so your team can manage customer conversations more consistently.",
   },
   {
-    role: "Operations Manager",
-    context: "Team reporting",
-    quote: "A clear view of our numbers without rebuilding the same report every week would be a huge help. We could spend our meetings deciding what to do next.",
+    title: "Team reporting",
+    description: "Connect business data and recurring reports to give your team a clearer view of day-to-day operations.",
   },
 ];
 
@@ -165,30 +162,17 @@ export default function Home() {
       <section className="border-b border-border bg-surface py-20 sm:py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <SectionHeading
-            eyebrow="Sample testimonials"
+            eyebrow="Business workflows"
             title="Less busywork. More room to do great work."
-            description="Illustrative quotes showing the value teams could find in automation. These are sample testimonials, not actual client feedback."
+            description="Connect the everyday processes that keep your business moving, from finance and sales to team reporting."
             align="center"
           />
           <div className="mt-12 grid gap-6 lg:grid-cols-3">
-            {sampleTestimonials.map((testimonial) => (
-              <figure key={testimonial.role} className="flex h-full flex-col rounded-lg border border-border bg-background p-7 shadow-sm">
-                <svg aria-hidden="true" viewBox="0 0 24 24" className="mb-5 h-9 w-9 text-primary/35" fill="currentColor">
-                  <path d="M3 11c0-4 2-7 6-8v3c-2 1-3 2-3 4h4v10H3V11Zm11 0c0-4 2-7 6-8v3c-2 1-3 2-3 4h4v10h-7V11Z" />
-                </svg>
-                <blockquote className="flex-1 text-lg leading-8 text-foreground">
-                  <p>&ldquo;{testimonial.quote}&rdquo;</p>
-                </blockquote>
-                <figcaption className="mt-7 flex items-center gap-3 border-t border-border pt-5">
-                  <span aria-hidden="true" className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
-                    <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round"><circle cx="12" cy="8" r="3" /><path d="M5 21v-2a7 7 0 0 1 14 0v2" /></svg>
-                  </span>
-                  <div>
-                    <p className="text-sm font-semibold text-foreground">{testimonial.role}</p>
-                    <p className="mt-1 text-xs text-muted-foreground">{testimonial.context}</p>
-                  </div>
-                </figcaption>
-              </figure>
+            {businessNeeds.map((need) => (
+              <article key={need.title} className="h-full rounded-lg border border-border bg-background p-7 shadow-sm">
+                <h3 className="text-xl font-semibold text-foreground">{need.title}</h3>
+                <p className="mt-4 text-base leading-7 text-muted-foreground">{need.description}</p>
+              </article>
             ))}
           </div>
           <div className="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
