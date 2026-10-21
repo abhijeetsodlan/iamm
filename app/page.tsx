@@ -36,15 +36,15 @@ const values = [
 const businessNeeds = [
   {
     title: "Invoice processing",
-    description: "Bring invoice details and approval steps into a connected workflow, with human review where it matters.",
+    description: "We believe your finance team should spend less time copying invoice details and chasing approvals, and more time making informed decisions.",
   },
   {
     title: "Lead management",
-    description: "Connect enquiries, ownership, and follow-ups so your team can manage customer conversations more consistently.",
+    description: "Every enquiry deserves a clear owner and a thoughtful follow-up. We help connect the steps so your team can focus on customer conversations.",
   },
   {
     title: "Team reporting",
-    description: "Connect business data and recurring reports to give your team a clearer view of day-to-day operations.",
+    description: "Your team should spend meetings deciding what comes next, rather than rebuilding the same reports. We focus on making everyday information easier to use.",
   },
 ];
 
@@ -162,17 +162,30 @@ export default function Home() {
       <section className="border-b border-border bg-surface py-20 sm:py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <SectionHeading
-            eyebrow="Business workflows"
+            eyebrow="Our perspective"
             title="Less busywork. More room to do great work."
-            description="Connect the everyday processes that keep your business moving, from finance and sales to team reporting."
+            description="What we believe better technology should do for the people behind your business."
             align="center"
           />
           <div className="mt-12 grid gap-6 lg:grid-cols-3">
             {businessNeeds.map((need) => (
-              <article key={need.title} className="h-full rounded-lg border border-border bg-background p-7 shadow-sm">
-                <h3 className="text-xl font-semibold text-foreground">{need.title}</h3>
-                <p className="mt-4 text-base leading-7 text-muted-foreground">{need.description}</p>
-              </article>
+              <figure key={need.title} className="flex h-full flex-col rounded-lg border border-border bg-background p-7 shadow-sm">
+                <svg aria-hidden="true" viewBox="0 0 24 24" className="mb-5 h-9 w-9 text-primary/35" fill="currentColor">
+                  <path d="M3 11c0-4 2-7 6-8v3c-2 1-3 2-3 4h4v10H3V11Zm11 0c0-4 2-7 6-8v3c-2 1-3 2-3 4h4v10h-7V11Z" />
+                </svg>
+                <blockquote className="flex-1 text-lg leading-8 text-foreground">
+                  <p>&ldquo;{need.description}&rdquo;</p>
+                </blockquote>
+                <figcaption className="mt-7 flex items-center gap-3 border-t border-border pt-5">
+                  <span aria-hidden="true" className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+                    <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round"><circle cx="12" cy="8" r="3" /><path d="M5 21v-2a7 7 0 0 1 14 0v2" /></svg>
+                  </span>
+                  <div>
+                    <p className="text-sm font-semibold text-foreground">IAMM Solutions</p>
+                    <p className="mt-1 text-xs text-muted-foreground">{need.title}</p>
+                  </div>
+                </figcaption>
+              </figure>
             ))}
           </div>
           <div className="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
