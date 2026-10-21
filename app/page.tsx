@@ -5,13 +5,13 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ScrollToTop } from "@/components/ui/ScrollToTop";
 import { ServiceCard } from "@/components/ui/ServiceCard";
 import { services } from "@/lib/site";
-import { createMetadata } from "@/lib/seo";
+import { createMetadata, defaultTitle, defaultDescription } from "@/lib/seo";
 
 export const metadata = createMetadata({
-  title: "AI Automation & Business Workflow Solutions",
-  description: "IAMM helps modern businesses automate repetitive work, integrate AI into existing tools, optimize workflows, and build practical digital systems for growth.",
+  title: defaultTitle,
+  description: defaultDescription,
   path: "/",
-  keywords: ["AI automation company", "business automation solutions", "AI workflow automation"],
+  keywords: ["IT services US", "IT services UK", "AI automation company"],
 });
 
 const values = [
@@ -33,26 +33,44 @@ const values = [
   ],
 ];
 
+const sampleTestimonials = [
+  {
+    role: "Finance Manager",
+    context: "Invoice processing",
+    quote: "Our team used to spend so much time copying invoice details and chasing approvals. Having everything ready for review in one place would make our day so much easier.",
+  },
+  {
+    role: "Sales Team Lead",
+    context: "Lead management",
+    quote: "Knowing every inquiry has an owner and a follow-up is exactly what we need. Less time checking spreadsheets means more time having real conversations with customers.",
+  },
+  {
+    role: "Operations Manager",
+    context: "Team reporting",
+    quote: "A clear view of our numbers without rebuilding the same report every week would be a huge help. We could spend our meetings deciding what to do next.",
+  },
+];
+
 const processSteps = [
   {
     title: "Discover",
-    description: "Map your goals, bottlenecks, tools, and the manual work slowing teams down.",
+    description: "Understand your business goals, current technology, and day-to-day IT support needs.",
   },
   {
-    title: "Analyze",
-    description: "Prioritize automation opportunities by effort, impact, risk, and business value.",
+    title: "Assess",
+    description: "Review security risks, system reliability, and cloud costs to agree on clear priorities.",
   },
   {
-    title: "Automate",
-    description: "Build focused AI workflows that connect cleanly with the systems you already use.",
+    title: "Implement",
+    description: "Put the right support, security controls, and technology improvements in place with your team.",
   },
   {
-    title: "Optimize",
-    description: "Tune the experience, reduce friction, and improve reliability with real feedback.",
+    title: "Monitor",
+    description: "Track system health, security, and spending to spot issues and guide ongoing improvements.",
   },
   {
     title: "Scale",
-    description: "Extend what works into repeatable systems your business can keep growing with.",
+    description: "Adapt your IT, security, and processes as your team grows and business needs change.",
   },
 ];
 
@@ -75,24 +93,24 @@ export default function Home() {
         <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-6 lg:grid-cols-[0.95fr_0.88fr] lg:px-8">
           <div className="max-w-3xl">
             <p className="animate-text-reveal mb-5 text-pretty text-xs font-bold uppercase tracking-[0.2em] text-primary sm:text-sm">
-              AI automation for modern businesses
+              IT services for modern businesses
             </p>
             <h1 className="animate-text-reveal max-w-4xl text-balance text-4xl font-semibold leading-[1.08] tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-              Automate what slows you down.{" "}
-              <span className="text-primary">Accelerate what matters.</span>
+              IT that runs smoothly, stays secure,{" "}
+              <span className="text-primary">and scales with you.</span>
             </h1>
             <p
               className="animate-text-reveal mt-6 max-w-2xl text-pretty text-base leading-8 text-muted-foreground sm:text-lg"
               style={{ animationDelay: "120ms" }}
             >
-              {preventWidow("IAMM helps businesses identify opportunities, automate repetitive processes, and integrate intelligent AI solutions that save time, reduce costs, and create room for growth.")}
+              {preventWidow("Managed IT, cybersecurity, cloud cost optimization, and AI automation for businesses in the US and UK.")}
             </p>
             <div
               className="animate-text-reveal mt-8 flex flex-col gap-3 sm:flex-row"
               style={{ animationDelay: "220ms" }}
             >
               <ButtonLink href="/assessment">
-                Get Your Free AI Assessment
+                Get Your Free IT Assessment
               </ButtonLink>
               <ButtonLink href="/services" variant="secondary">
                 Explore Our Services
@@ -134,12 +152,48 @@ export default function Home() {
           <SectionHeading
             eyebrow="Services"
             title="Solutions Built to Move Your Business Forward."
-            description="From intelligent automation and AI integration to custom business solutions, IAMM helps you simplify operations, eliminate repetitive work, and build systems that scale with your business."
+            description="Keep your IT running smoothly, strengthen your security, control cloud costs, and simplify repetitive work with services built around your business."
           />
-          <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {services.slice(0, 6).map((service) => (
+          <div className="mt-12 grid gap-6 md:grid-cols-2">
+            {services.map((service) => (
               <ServiceCard key={service.title} {...service} />
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-b border-border bg-surface py-20 sm:py-24">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <SectionHeading
+            eyebrow="Sample testimonials"
+            title="Less busywork. More room to do great work."
+            description="Illustrative quotes showing the value teams could find in automation. These are sample testimonials, not actual client feedback."
+            align="center"
+          />
+          <div className="mt-12 grid gap-6 lg:grid-cols-3">
+            {sampleTestimonials.map((testimonial) => (
+              <figure key={testimonial.role} className="flex h-full flex-col rounded-lg border border-border bg-background p-7 shadow-sm">
+                <svg aria-hidden="true" viewBox="0 0 24 24" className="mb-5 h-9 w-9 text-primary/35" fill="currentColor">
+                  <path d="M3 11c0-4 2-7 6-8v3c-2 1-3 2-3 4h4v10H3V11Zm11 0c0-4 2-7 6-8v3c-2 1-3 2-3 4h4v10h-7V11Z" />
+                </svg>
+                <blockquote className="flex-1 text-lg leading-8 text-foreground">
+                  <p>&ldquo;{testimonial.quote}&rdquo;</p>
+                </blockquote>
+                <figcaption className="mt-7 flex items-center gap-3 border-t border-border pt-5">
+                  <span aria-hidden="true" className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+                    <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round"><circle cx="12" cy="8" r="3" /><path d="M5 21v-2a7 7 0 0 1 14 0v2" /></svg>
+                  </span>
+                  <div>
+                    <p className="text-sm font-semibold text-foreground">{testimonial.role}</p>
+                    <p className="mt-1 text-xs text-muted-foreground">{testimonial.context}</p>
+                  </div>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+          <div className="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <p className="max-w-2xl text-sm leading-6 text-muted-foreground">Your tools, process, and review needs shape the outcome. Start with an assessment to find the best fit.</p>
+            <ButtonLink href="/assessment" variant="secondary">Explore your opportunities</ButtonLink>
           </div>
         </div>
       </section>
@@ -150,7 +204,7 @@ export default function Home() {
           <SectionHeading
             eyebrow="How IAMM works" 
             title="From Problem to Progress."
-            description="A practical process for turning business friction into intelligent systems your team can trust."
+            description="A clear approach to reliable IT, stronger security, controlled cloud costs, and smarter ways of working."
             align="center"
           />
           <div className="relative mt-14 grid gap-5 md:grid-cols-5">
@@ -161,9 +215,6 @@ export default function Home() {
                 style={{ animationDelay: `${index * 90}ms` }}
               >
                 <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary via-accent to-primary opacity-70 transition duration-300 group-hover:opacity-100" />
-                <div className="absolute right-4 top-4 text-5xl font-semibold leading-none text-primary/[0.08] transition duration-300 group-hover:scale-110 group-hover:text-primary/15">
-                  {String(index + 1).padStart(2, "0")}
-                </div>
                 <div className="relative mb-8 flex h-12 w-12 items-center justify-center rounded-md bg-primary text-sm font-bold text-white shadow-lg shadow-primary/25 transition duration-300 group-hover:rotate-3 group-hover:scale-105 group-hover:bg-accent group-hover:text-secondary">
                   {index + 1}
                 </div>
@@ -188,13 +239,13 @@ export default function Home() {
       <section className="bg-surface py-20 sm:py-24">
         <div className="mx-auto max-w-5xl px-6 text-center lg:px-8">
           <SectionHeading
-            eyebrow="Free AI Business Assessment"
-            title="Find out where AI can improve your business."
-            description="Share your current challenges and workflows. IAMM will use the assessment structure to identify promising areas for automation when backend review is added."
+            eyebrow="Free IT Assessment"
+            title="Find out how your technology could work better."
+            description="Share your IT support needs, security concerns, cloud spending, and workflow challenges. IAMM will review your priorities and identify practical next steps."
             align="center"
           />
           <ButtonLink href="/assessment" className="mt-8">
-            Start Free Assessment
+            Start Free IT Assessment
           </ButtonLink>
         </div>
       </section>
@@ -203,18 +254,10 @@ export default function Home() {
         title="Ready to explore a more intelligent operating model?"
         description="Start with the assessment or speak with IAMM about the workflows you want to improve."
         primaryHref="/assessment"
-        primaryLabel="Start Assessment"
+        primaryLabel="Free IT Assessment"
         secondaryHref="/contact"
         secondaryLabel="Contact IAMM"
       />
     </>
   );
 }
-
-
-
-
-
-
-
-

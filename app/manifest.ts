@@ -2,9 +2,9 @@
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "IAMM - AI Automation & Business Workflow Solutions",
+    name: "IAMM Solutions | Managed IT, Cybersecurity & AI Automation",
     short_name: "IAMM",
-    description: "AI automation, workflow optimization, and digital solutions for modern businesses.",
+    description: "Managed IT, cybersecurity, cloud cost optimization, and AI automation for businesses in the US and UK.",
     start_url: "/",
     display: "standalone",
     background_color: "#ffffff",

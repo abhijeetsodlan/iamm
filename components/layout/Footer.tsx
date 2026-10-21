@@ -12,8 +12,9 @@ export function Footer() {
             <BrandLogo mode="dark" imageClassName="h-12 w-40" />
           </Link>
           <p className="mt-5 max-w-sm text-sm leading-6 text-white/65">
-            AI, automation, and digital solutions for businesses that want practical systems, cleaner workflows, and scalable operations.
+            {siteConfig.description}
           </p>
+          <p className="mt-3 text-sm leading-6 text-white/65">We work with businesses in the US and UK.</p>
           <div className="mt-6">
             <SocialLinks variant="dark" showLabels />
           </div>
@@ -31,8 +32,10 @@ export function Footer() {
         <div>
           <h2 className="text-sm font-semibold">Services</h2>
           <ul className="mt-4 space-y-3 text-sm text-white/65">
-            {services.slice(0, 5).map((service) => (
-              <li key={service.title}>{service.title}</li>
+            {services.map((service) => (
+              <li key={service.id}>
+                <Link className="transition hover:text-white" href={`/services#${service.id}`}>{service.title}</Link>
+              </li>
             ))}
           </ul>
         </div>

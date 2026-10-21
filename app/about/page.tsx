@@ -62,8 +62,7 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-      <CtaBand title="Explore what AI could improve in your business." description="Start with the free assessment or contact IAMM to discuss a specific workflow or digital initiative." primaryHref="/assessment" primaryLabel="Start Assessment" secondaryHref="/contact" secondaryLabel="Contact IAMM" />
+      <CtaBand title="Make your technology work better for your business." description="Start with a free IT assessment or contact IAMM to discuss your support, security, cloud, or automation needs." primaryHref="/assessment" primaryLabel="Free IT Assessment" secondaryHref="/contact" secondaryLabel="Contact IAMM" />
     </>
   );
 }
-

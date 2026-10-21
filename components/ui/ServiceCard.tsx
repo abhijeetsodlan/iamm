@@ -1,7 +1,10 @@
 ﻿import { ButtonLink } from "@/components/ui/Button";
 
+import { ServiceIcon, type ServiceIconName } from "@/components/ui/ServiceIcon";
+
 type ServiceCardProps = {
-  icon: string;
+  id: string;
+  icon: ServiceIconName;
   title: string;
   description: string;
   benefits?: string[];
@@ -20,6 +23,7 @@ function preventWidow(text: string) {
 }
 
 export function ServiceCard({
+  id,
   icon,
   title,
   description,
@@ -28,14 +32,14 @@ export function ServiceCard({
   detailed = false,
 }: ServiceCardProps) {
   return (
-    <article className="group h-full rounded-lg border border-border bg-surface p-6 shadow-sm transition duration-200 hover:-translate-y-1 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 motion-reduce:transform-none">
+    <article id={detailed ? id : undefined} className="group h-full scroll-mt-28 rounded-lg border border-border bg-surface p-6 shadow-sm transition duration-200 hover:-translate-y-1 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 motion-reduce:transform-none">
       <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-md bg-primary/10 text-sm font-bold text-primary ring-1 ring-primary/15">
-        {icon}
+        <ServiceIcon name={icon} />
       </div>
       <h3 className="text-pretty text-xl font-semibold text-foreground">{preventWidow(title)}</h3>
       <p className={`mt-3 text-pretty leading-7 text-muted-foreground ${detailed ? "" : "line-clamp-3"}`}>{preventWidow(description)}</p>
       {!detailed ? (
-        <ButtonLink href="/services" variant="ghost" className="mt-5 px-0 hover:bg-transparent">
+        <ButtonLink href={`/services#${id}`} aria-label={`Learn more about ${title}`} variant="ghost" className="mt-5 px-0 hover:bg-transparent">
           Learn more
         </ButtonLink>
       ) : null}

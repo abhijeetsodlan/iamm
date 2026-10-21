@@ -1,7 +1,6 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { supabase } from "@/lib/supabase";
 import { Button } from "@/components/ui/Button";
 
 type Toast = {
@@ -32,20 +31,13 @@ function ToastMessage({ toast }: { toast: Toast | null }) {
   );
 }
 
-function showSupabaseError(message: string) {
-  if (message.includes("row-level security")) {
-    return "Message could not be submitted right now. Please try again later.";
-  }
-
-  return message;
-}
-
-export function ContactForm() {
+export function ContactForm({ initialSubject = "", initialMessage = "", quoteRequest = false }: { initialSubject?: string; initialMessage?: string; quoteRequest?: boolean }) {
   const [toast, setToast] = useState<Toast | null>(null);
   const [pending, setPending] = useState(false);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (pending) return;
 
     const form = event.currentTarget;
 
@@ -66,17 +58,24 @@ export function ContactForm() {
       message: String(formData.get("message") || "").trim(),
     };
 
-    const { error } = await supabase.from("contact_submissions").insert(payload);
-
-    setPending(false);
-
-    if (error) {
-      setToast({ type: "error", message: showSupabaseError(error.message) });
-      return;
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const result = await response.json();
+      if (!response.ok || !result.saved) {
+        setToast({ type: "error", message: result.error || "Your message could not be submitted. Please try again." });
+        return;
+      }
+      form.reset();
+      setToast({ type: "success", message: "Your message has been saved. IAMM will follow up soon." });
+    } catch {
+      setToast({ type: "error", message: "Unable to confirm submission. Please check your connection or contact info@iammllc.com before trying again." });
+    } finally {
+      setPending(false);
     }
-
-    form.reset();
-    setToast({ type: "success", message: "Your message has been saved. IAMM will follow up soon." });
   }
 
   return (
@@ -84,11 +83,11 @@ export function ContactForm() {
       <label className={labelClass}>Name <span className="text-error">*</span><input required name="name" className={inputClass} placeholder="Your name" /></label>
       <label className={labelClass}>Email <span className="text-error">*</span><input required type="email" name="email" className={inputClass} placeholder="you@company.com" /></label>
       <label className={labelClass}>Company<input name="company" className={inputClass} placeholder="Company name" /></label>
-      <label className={labelClass}>Subject <span className="text-error">*</span><input required name="subject" className={inputClass} placeholder="How can IAMM help?" /></label>
-      <label className={labelClass}>Message <span className="text-error">*</span><textarea required name="message" className={`${inputClass} min-h-36`} placeholder="Tell us what you are exploring." /></label>
+      <label className={labelClass}>Subject <span className="text-error">*</span><input required name="subject" defaultValue={initialSubject} className={inputClass} placeholder="How can IAMM help?" /></label>
+      <label className={labelClass}>Message <span className="text-error">*</span><textarea required name="message" defaultValue={initialMessage} className={`${inputClass} min-h-36`} placeholder={quoteRequest ? "Tell us your team size, number of devices, location, and support needs." : "Tell us what you are exploring."} /></label>
       <ToastMessage toast={toast} />
       <Button type="submit" disabled={pending} className="w-full gap-2 disabled:cursor-not-allowed disabled:opacity-70 sm:w-fit">
-        {pending ? <><SubmitSpinner /> Sending...</> : "Send Message"}
+        {pending ? <><SubmitSpinner /> Sending...</> : quoteRequest ? "Request a Quote" : "Send Message"}
       </Button>
     </form>
   );

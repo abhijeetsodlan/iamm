@@ -176,7 +176,7 @@ export function Navbar() {
           </button>
 
           <ButtonLink href="/assessment">
-            Free AI Assessment
+            Free IT Assessment
           </ButtonLink>
         </div>
 
@@ -256,7 +256,7 @@ export function Navbar() {
               onClick={closeMenu}
               className="mt-3 w-full"
             >
-              Free AI Assessment
+              Free IT Assessment
             </ButtonLink>
           </div>
         </div>

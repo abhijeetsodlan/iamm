@@ -1,10 +1,14 @@
 ﻿import type { Metadata } from "next";
 
-export const siteUrl = "https://iamm.ai";
-export const siteName = "IAMM";
-export const defaultDescription = "IAMM helps businesses improve operations with AI automation, workflow optimization, intelligent integrations, and practical digital solutions.";
+export const siteUrl = "https://iammllc.com";
+export const siteName = "IAMM Solutions";
+export const defaultTitle = "IAMM Solutions | Managed IT, Cybersecurity & AI Automation";
+export const defaultDescription = "IAMM Solutions provides managed IT, cybersecurity, cloud cost optimization, and AI automation for businesses in the US and UK. Keep your IT secure and scalable.";
 
 const defaultKeywords = [
+  "managed IT services",
+  "cybersecurity",
+  "cloud cost optimization",
   "AI automation",
   "business automation",
   "workflow automation",
@@ -65,7 +69,7 @@ export function createMetadata({ title, description, path = "/", keywords = [], 
           url: "/opengraph-image",
           width: 1200,
           height: 630,
-          alt: `${siteName} - AI automation for modern businesses`,
+          alt: `${siteName} - Managed IT, cybersecurity, and AI automation`,
         },
       ],
     },

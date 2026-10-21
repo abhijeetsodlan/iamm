@@ -13,7 +13,8 @@ const links: SocialLink[] = [
   { label: "Instagram", href: "https://www.instagram.com/iamm.llc/", icon: "instagram" },
   { label: "X", href: "https://x.com/iamm_llc", icon: "x" },
   { label: "info@iammllc.com", href: "mailto:info@iammllc.com", icon: "email" },
-  { label: "+1 307 317 7872", href: "tel:+13073177872", icon: "phone" },
+  { label: "US: +1 307 317 7872", href: "tel:+13073177872", icon: "phone" },
+  { label: "UK: +44 7999 185330", href: "tel:+447999185330", icon: "phone" },
 ];
 
 function Icon({ icon }: { icon: SocialLink["icon"] }) {

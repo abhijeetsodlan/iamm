@@ -30,6 +30,12 @@ create table if not exists public.assessment_submissions (
   updated_at timestamptz not null default now()
 );
 
+-- Also upgrades existing installations; nullable fields preserve older submissions.
+alter table public.assessment_submissions
+  add column if not exists security_needs text,
+  add column if not exists cloud_spend text,
+  add column if not exists it_support_needs text;
+
 alter table public.contact_submissions enable row level security;
 alter table public.assessment_submissions enable row level security;
 

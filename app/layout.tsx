@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
-import { createMetadata, organizationJsonLd, siteUrl, websiteJsonLd } from "@/lib/seo";
+import { createMetadata, defaultTitle, defaultDescription, organizationJsonLd, siteName, siteUrl, websiteJsonLd } from "@/lib/seo";
 import "./globals.css";
 
 const inter = Inter({
@@ -14,13 +14,13 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   ...createMetadata({
-    title: "AI Automation & Business Workflow Solutions",
-    description: "IAMM helps businesses save time, reduce manual work, and improve operations with practical AI automation, intelligent integrations, and workflow optimization.",
+    title: defaultTitle,
+    description: defaultDescription,
     path: "/",
   }),
   title: {
-    default: "IAMM | AI Automation & Business Workflow Solutions",
-    template: "%s | IAMM",
+    default: defaultTitle,
+    template: `%s | ${siteName}`,
   },
   metadataBase: new URL(siteUrl),
   applicationName: "IAMM",

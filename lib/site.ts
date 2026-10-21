@@ -1,11 +1,12 @@
 ﻿export const siteConfig = {
   name: "IAMM",
-  url: "https://iamm.ai",
+  url: "https://iammllc.com",
   description:
-    "AI automation and digital solutions for businesses ready to improve operations, customer experience, and scale.",
+    "Managed IT, cybersecurity, cloud cost optimization, and AI automation. IT that runs smoothly, stays secure, and scales with you.",
   nav: [
     { label: "Home", href: "/" },
     { label: "Services", href: "/services" },
+    { label: "Plans", href: "/plans" },
     { label: "About", href: "/about" },
     { label: "Assessment", href: "/assessment" },
     { label: "Contact", href: "/contact" },
@@ -14,59 +15,42 @@
 
 export const services = [
   {
-    icon: "AI",
-    title: "AI Automation",
-    description:
-      "Automate repetitive decisions, handoffs, and operational workflows with practical AI systems built around your business. IAMM focuses on the daily work that slows teams down, then designs automation that can support intake, routing, follow-ups, reporting, and task coordination without adding unnecessary complexity.",
-    benefits: ["Reduce manual work", "Improve consistency", "Accelerate response times"],
-    useCases: ["Lead qualification", "Document processing", "Customer support routing"],
+    icon: "monitor" as const,
+    id: "managed-it-services",
+    title: "Managed IT Services",
+    description: "Keep your everyday technology running smoothly with practical IT support, proactive maintenance, and clear ownership of your systems. IAMM helps manage devices, business applications, user access, and IT planning so your team can stay focused as your business grows.",
+    benefits: ["Less IT disruption", "Reliable day-to-day support", "Technology that grows with you"],
+    useCases: ["Device and software management", "Employee onboarding and offboarding", "IT maintenance and planning"],
   },
   {
-    icon: "BP",
-    title: "Business Process Automation",
-    description:
-      "Turn manual, disconnected processes into reliable workflows that move information and tasks without constant supervision. From approvals and onboarding to internal requests and service delivery, IAMM helps structure processes so work moves clearly between people, systems, and decisions.",
-    benefits: ["Lower operating friction", "Fewer missed steps", "Better team visibility"],
-    useCases: ["Approvals", "Onboarding", "Internal operations"],
+    icon: "shield" as const,
+    id: "cybersecurity",
+    title: "Cybersecurity",
+    description: "Strengthen your defenses with security built around your people, devices, and data. IAMM helps identify gaps, improve access controls, protect endpoints, and prepare recovery plans so your business can reduce risk and respond more confidently to threats.",
+    benefits: ["Reduced security risk", "Stronger access controls", "Better recovery readiness"],
+    useCases: ["Security assessments", "Endpoint and account protection", "Backup and recovery planning"],
   },
   {
-    icon: "IN",
-    title: "AI Integration",
-    description:
-      "Connect AI capabilities with the tools your team already uses, from CRMs and forms to dashboards and internal systems. IAMM helps reduce duplicate entry, improve data flow, and make existing platforms more useful by adding intelligent triggers, summaries, enrichment, and workflow actions.",
-    benefits: ["Keep current tools", "Avoid duplicate entry", "Make data more useful"],
-    useCases: ["CRM enrichment", "Knowledge assistants", "Workflow triggers"],
+    icon: "cloud" as const,
+    id: "cloud-cost-optimization",
+    title: "Cloud Cost Optimization",
+    description: "Understand where your cloud budget goes and find opportunities to reduce waste without losing sight of performance. IAMM reviews resource usage, service choices, and billing to help right-size your environment and build clearer cost controls.",
+    benefits: ["Clearer spending visibility", "Less unused capacity", "Costs aligned with business needs"],
+    useCases: ["Cloud billing and usage reviews", "Resource right-sizing", "Budget alerts and cost reporting"],
   },
   {
-    icon: "CA",
-    title: "Custom AI Solutions",
-    description:
-      "Design focused AI products and internal tools for use cases that cannot be solved well with off-the-shelf software. IAMM can help shape custom dashboards, copilots, decision-support systems, and workflow tools around the specific way your business operates.",
-    benefits: ["Fit your exact workflow", "Control the experience", "Scale with your roadmap"],
-    useCases: ["AI copilots", "Decision support", "Operational dashboards"],
-  },
-  {
-    icon: "WO",
-    title: "Workflow Optimization",
-    description:
-      "Analyze how work moves through your business and redesign bottlenecks before automation is introduced. IAMM maps current processes, identifies repeated friction, clarifies ownership, and recommends practical improvements so automation supports a better operating model instead of covering up broken steps.",
-    benefits: ["Clearer ownership", "Shorter cycle times", "Cleaner systems"],
-    useCases: ["Sales operations", "Service delivery", "Back-office processes"],
-  },
-  {
-    icon: "DT",
-    title: "Digital Transformation",
-    description:
-      "Modernize business operations with practical technology plans, phased implementation, and measurable improvements. IAMM helps businesses move from scattered tools and manual work toward cleaner digital systems that improve customer experience, reporting visibility, and operational scale.",
-    benefits: ["Practical roadmap", "Less operational drag", "Better customer experience"],
-    useCases: ["Legacy process upgrades", "Digital service design", "Data visibility"],
+    icon: "workflow" as const,
+    id: "ai-workflow-automation",
+    title: "AI & Workflow Automation",
+    description: "Simplify repetitive work with connected workflows and practical AI. IAMM combines process optimization, system integrations, and custom AI tools to support lead handling, document processing, reporting, and internal operations, with human review where it matters.",
+    benefits: ["Less manual work", "More consistent processes", "Better-connected tools"],
+    useCases: ["CRM integrations and follow-ups", "Document processing and approvals", "AI assistants and reporting"],
   },
 ];
-
 export const processSteps = [
   "Discover",
-  "Analyze",
-  "Automate",
-  "Optimize",
+  "Assess",
+  "Implement",
+  "Monitor",
   "Scale",
 ] as const;

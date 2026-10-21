@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -26,6 +26,9 @@ type AssessmentSubmission = {
   website: string | null;
   industry: string;
   existing_tools: string | null;
+  security_needs: string | null;
+  cloud_spend: string | null;
+  it_support_needs: string | null;
   challenges: string;
   automation_areas: string | null;
   additional_info: string | null;
@@ -160,6 +163,9 @@ function exportAssessments(rows: AssessmentSubmission[]) {
     { label: "Website", width: 260 },
     { label: "Industry", width: 180 },
     { label: "Existing Tools", width: 320 },
+    { label: "Security Needs", width: 440 },
+    { label: "Monthly Cloud Spend", width: 240 },
+    { label: "IT Support Needs", width: 440 },
     { label: "Challenges", width: 520 },
     { label: "Automation Areas", width: 440 },
     { label: "Additional Info", width: 380 },
@@ -173,6 +179,9 @@ function exportAssessments(rows: AssessmentSubmission[]) {
     sanitizeSheetValue(item.website),
     sanitizeSheetValue(item.industry),
     sanitizeSheetValue(item.existing_tools),
+    sanitizeSheetValue(item.security_needs),
+    sanitizeSheetValue(item.cloud_spend),
+    sanitizeSheetValue(item.it_support_needs),
     sanitizeSheetValue(item.challenges),
     sanitizeSheetValue(item.automation_areas),
     sanitizeSheetValue(item.additional_info),
@@ -296,7 +305,7 @@ export function AdminDashboard({ view }: { view: AdminView }) {
   const statusOptions = useMemo(() => uniqueValues(view === "contact" ? data.contacts.map((item) => item.status) : data.assessments.map((item) => item.status)), [data.assessments, data.contacts, view]);
   const industryOptions = useMemo(() => uniqueValues(data.assessments.map((item) => item.industry)), [data.assessments]);
   const filteredContacts = useMemo(() => data.contacts.filter((item) => (filters.status === "all" || item.status === filters.status) && matchesDateRange(item.created_at, filters.fromDate, filters.toDate) && textMatches(filters.query, [item.name, item.email, item.company, item.subject, item.message])), [data.contacts, filters]);
-  const filteredAssessments = useMemo(() => data.assessments.filter((item) => (filters.status === "all" || item.status === filters.status) && (filters.industry === "all" || item.industry === filters.industry) && matchesDateRange(item.created_at, filters.fromDate, filters.toDate) && textMatches(filters.query, [item.name, item.company, item.email, item.phone, item.website, item.industry, item.existing_tools, item.challenges, item.automation_areas, item.additional_info])), [data.assessments, filters]);
+  const filteredAssessments = useMemo(() => data.assessments.filter((item) => (filters.status === "all" || item.status === filters.status) && (filters.industry === "all" || item.industry === filters.industry) && matchesDateRange(item.created_at, filters.fromDate, filters.toDate) && textMatches(filters.query, [item.name, item.company, item.email, item.phone, item.website, item.industry, item.existing_tools, item.security_needs, item.cloud_spend, item.it_support_needs, item.challenges, item.automation_areas, item.additional_info])), [data.assessments, filters]);
 
   function updateFilter(key: keyof Filters, value: string) { setFilters((current) => ({ ...current, [key]: value })); }
   async function signOut() { await supabase.auth.signOut(); router.replace("/admin/login"); }
@@ -354,25 +363,5 @@ function ContactTable({ rows, total }: { rows: ContactSubmission[]; total: numbe
 }
 
 function AssessmentTable({ rows, total }: { rows: AssessmentSubmission[]; total: number }) {
-  return <section className="overflow-hidden rounded-lg border border-border bg-surface shadow-sm"><div className="flex items-center justify-between gap-3 border-b border-border px-4 py-3"><div><h2 className="font-semibold text-foreground">Assessment Submissions</h2><p className="text-sm text-muted-foreground">Showing {rows.length} of {total}</p></div><Button type="button" variant="secondary" className="h-9 min-h-9 gap-2 px-3 py-1.5 text-xs" onClick={() => exportAssessments(rows)} disabled={!rows.length}><Icon name="download" />Export XLS</Button></div>{rows.length ? <div className="max-h-[68vh] overflow-auto"><table className="w-full min-w-[1510px] border-collapse"><thead className="sticky top-0 z-10"><tr><th className={thClass}>Date</th><th className={thClass}>Name</th><th className={thClass}>Email</th><th className={thClass}>Phone</th><th className={thClass}>Company</th><th className={thClass}>Website</th><th className={thClass}>Industry</th><th className={thClass}>Tools</th><th className={thClass}>Challenges</th><th className={thClass}>Automation</th><th className={thClass}>Additional</th><th className={thClass}>Status</th></tr></thead><tbody>{rows.map((item) => <tr key={item.id} className="transition hover:bg-muted/60"><td className={`${tdClass} whitespace-nowrap`}>{formatDate(item.created_at)}</td><td className={`${tdClass} font-semibold text-foreground`}>{item.name}</td><td className={tdClass}>{item.email}</td><td className={tdClass}>{item.phone || "Not provided"}</td><td className={`${tdClass} font-semibold text-foreground`}>{item.company}</td><td className={tdClass}>{item.website ? <a href={item.website} target="_blank" rel="noopener noreferrer" className="font-medium text-primary underline-offset-4 hover:underline">{item.website}</a> : "Not provided"}</td><td className={tdClass}>{item.industry}</td><td className={`${tdClass} min-w-56`}>{item.existing_tools || "Not provided"}</td><td className={`${tdClass} min-w-96`}><p className="line-clamp-4 leading-6">{item.challenges}</p></td><td className={`${tdClass} min-w-80`}><p className="line-clamp-4 leading-6">{item.automation_areas || "Not provided"}</p></td><td className={`${tdClass} min-w-72`}><p className="line-clamp-3 leading-6">{item.additional_info || "Not provided"}</p></td><td className={tdClass}><StatusBadge status={item.status} /></td></tr>)}</tbody></table></div> : <div className="border-t border-border px-4 py-10 text-center text-sm text-muted-foreground">No assessment submissions match the selected filters.</div>}</section>;
+  return <section className="overflow-hidden rounded-lg border border-border bg-surface shadow-sm"><div className="flex items-center justify-between gap-3 border-b border-border px-4 py-3"><div><h2 className="font-semibold text-foreground">Assessment Submissions</h2><p className="text-sm text-muted-foreground">Showing {rows.length} of {total}</p></div><Button type="button" variant="secondary" className="h-9 min-h-9 gap-2 px-3 py-1.5 text-xs" onClick={() => exportAssessments(rows)} disabled={!rows.length}><Icon name="download" />Export XLS</Button></div>{rows.length ? <div className="max-h-[68vh] overflow-auto"><table className="w-full min-w-[1510px] border-collapse"><thead className="sticky top-0 z-10"><tr><th className={thClass}>Date</th><th className={thClass}>Name</th><th className={thClass}>Email</th><th className={thClass}>Phone</th><th className={thClass}>Company</th><th className={thClass}>Website</th><th className={thClass}>Industry</th><th className={thClass}>Tools</th><th className={thClass}>Security Needs</th><th className={thClass}>Monthly Cloud Spend</th><th className={thClass}>IT Support Needs</th><th className={thClass}>Challenges</th><th className={thClass}>Automation</th><th className={thClass}>Additional</th><th className={thClass}>Status</th></tr></thead><tbody>{rows.map((item) => <tr key={item.id} className="transition hover:bg-muted/60"><td className={`${tdClass} whitespace-nowrap`}>{formatDate(item.created_at)}</td><td className={`${tdClass} font-semibold text-foreground`}>{item.name}</td><td className={tdClass}>{item.email}</td><td className={tdClass}>{item.phone || "Not provided"}</td><td className={`${tdClass} font-semibold text-foreground`}>{item.company}</td><td className={tdClass}>{item.website ? <a href={item.website} target="_blank" rel="noopener noreferrer" className="font-medium text-primary underline-offset-4 hover:underline">{item.website}</a> : "Not provided"}</td><td className={tdClass}>{item.industry}</td><td className={`${tdClass} min-w-56`}>{item.existing_tools || "Not provided"}</td><td className={`${tdClass} min-w-64`}>{item.security_needs || "Not provided"}</td><td className={`${tdClass} min-w-48`}>{item.cloud_spend || "Not provided"}</td><td className={`${tdClass} min-w-64`}>{item.it_support_needs || "Not provided"}</td><td className={`${tdClass} min-w-96`}><p className="line-clamp-4 leading-6">{item.challenges}</p></td><td className={`${tdClass} min-w-80`}><p className="line-clamp-4 leading-6">{item.automation_areas || "Not provided"}</p></td><td className={`${tdClass} min-w-72`}><p className="line-clamp-3 leading-6">{item.additional_info || "Not provided"}</p></td><td className={tdClass}><StatusBadge status={item.status} /></td></tr>)}</tbody></table></div> : <div className="border-t border-border px-4 py-10 text-center text-sm text-muted-foreground">No assessment submissions match the selected filters.</div>}</section>;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
