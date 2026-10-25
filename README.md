@@ -33,6 +33,52 @@ TLS SMTP connections to smtp.gmail.com:465.
 Run `node --test --experimental-test-isolation=none tests/assessment.test.mjs` for mocked API tests. These do not send
 live email or modify your database. The contact form uses `app/api/contact/route.ts` to save contact, quote and project enquiries, then sends a matching branded notification through the same Gmail transport.
 
+## IAMM AI chatbot
+
+Add `GEMINI_API_KEY` to `.env.local` and to your Vercel environment, then restart
+development or redeploy. Keep this key server-only. `GEMINI_MODEL` optionally
+overrides the default `gemini-3.1-flash-lite`; choose a Gemini model that supports
+structured JSON output and is available for your project. Free-tier quotas and
+model availability are controlled by Google, not by the key's display name.
+
+If your key is in `.env`, do not leave an empty `GEMINI_API_KEY=` in
+`.env.local`: Next.js gives `.env.local` precedence, even when the value is empty.
+Keep the key in one local environment file and restart the dev server after
+changing it. A successful models-list request verifies authentication; a live
+generation and `/api/chat` request are needed to verify actual chat operation.
+
+- `components/chat/Chatbot.tsx`: chat window, suggested questions and approved links.
+- `app/api/chat/route.ts`: input validation, Gemini REST call and error handling.
+- `lib/chatbot.ts`: IAMM scope rules and knowledge assembled from `lib/site.ts`.
+- `lib/site.ts`: shared services, plans, projects and process; plan changes here
+  update both the Plans page and the chatbot context.
+
+The widget appears on public pages and is hidden on admin routes. It keeps chat
+in page memory only; no chat tables or Supabase migration are needed. A request
+sends the latest four exchanges plus the new question to Google. There are no
+tools, browsing, database reads, automatic form submissions or email actions.
+Responses are displayed as escaped text; navigation uses fixed approved links.
+Scope instructions and a structured relevance flag redirect off-topic requests,
+but model-based topic control is not a guarantee against all prompt injection.
+Confirm pricing and support commitments with IAMM.
+
+Requests are limited to 1,200 characters per question, nine history messages,
+32 KB per request, six requests per visitor/minute and 30 per server instance/minute.
+The in-memory limits reset on cold starts and are not shared across Vercel
+instances. They are best-effort controls, not a hard spending cap. Set provider
+quotas and configure a Vercel firewall rate-limit rule on `/api/chat` for
+deployment-wide protection. Never assume the free tier provides unlimited usage.
+Provider outages, blocked responses and quota exhaustion offer a contact fallback.
+Messages are processed by Google; free-tier content may be used for product
+improvement. The chat and privacy page disclose this and advise against sensitive
+details. No visitor message or provider response body is logged by the chat route.
+
+Run `node --test --experimental-test-isolation=none tests/chat.test.mjs tests/assessment.test.mjs`
+for mocked checks. Before launch, add the real key and manually check service
+questions, plan comparisons, contextual follow-ups, unrelated requests, attempted
+role overrides, quota errors and mobile/keyboard interaction. Mocked checks do
+not establish Gemini's real response quality or perfect topic adherence.
+
 ## Getting Started
 
 First, run the development server:

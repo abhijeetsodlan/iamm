@@ -1,3 +1,4 @@
+import { managedITPlans as plans, projectServices as projects } from "@/lib/site";
 import { ButtonLink } from "@/components/ui/Button";
 import { CtaBand } from "@/components/ui/CtaBand";
 import { createMetadata } from "@/lib/seo";
@@ -8,28 +9,6 @@ export const metadata = createMetadata({
   path: "/plans",
 });
 
-const plans = [
-  {
-    name: "Essential",
-    description: "For small teams that need dependable everyday IT.",
-    features: ["Remote helpdesk support", "Device monitoring and maintenance", "Software updates and security patching", "Antivirus and endpoint protection", "Automated backups"],
-    popular: false,
-  },
-  {
-    name: "Business",
-    description: "For growing businesses that need stronger security and management.",
-    features: ["Everything in Essential", "Advanced email and phishing protection", "Multi-factor authentication setup", "Microsoft 365 / Google Workspace management", "Quarterly security review", "Monthly IT health report"],
-    popular: true,
-  },
-  {
-    name: "Premium",
-    description: "For businesses that want a full IT partner.",
-    features: ["Everything in Business", "Cloud cost optimization reviews", "One automation or AI improvement per quarter", "Priority support", "Dedicated account contact"],
-    popular: false,
-  },
-];
-
-const projects = ["Cybersecurity audits", "Cloud setup and migration", "AI and workflow automation", "Office and remote team IT setup"];
 const reasons = [
   { title: "Predictable costs", description: "One monthly fee for your agreed support scope, with any additional work quoted upfront." },
   { title: "Proactive support", description: "Monitoring and maintenance help catch problems before they slow your team down." },

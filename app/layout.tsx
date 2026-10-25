@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
+import { Chatbot } from "@/components/chat/Chatbot";
 import { createMetadata, defaultTitle, defaultDescription, organizationJsonLd, siteName, siteUrl, websiteJsonLd } from "@/lib/seo";
 import "./globals.css";
 
@@ -53,6 +54,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <div className="flex-1">{children}</div>
           <Footer />
         </SmoothScroll>
+        <Chatbot />
       </body>
     </html>
   );

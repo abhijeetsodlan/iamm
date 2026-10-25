@@ -48,7 +48,7 @@ export function ScrollToTop({ showAfter = 0.3 }: ScrollToTopProps) {
       aria-label="Scroll to top"
       title="Scroll to top"
       onClick={scrollToTop}
-      className={`fixed bottom-5 right-5 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-secondary text-white shadow-xl shadow-primary/20 transition duration-300 hover:-translate-y-1 hover:shadow-primary/30 active:translate-y-0 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30 lg:hidden motion-reduce:transform-none ${
+      className={`fixed bottom-24 right-5 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-secondary text-white shadow-xl shadow-primary/20 transition duration-300 hover:-translate-y-1 hover:shadow-primary/30 active:translate-y-0 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30 lg:hidden motion-reduce:transform-none ${
         visible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0"
       }`}
     >

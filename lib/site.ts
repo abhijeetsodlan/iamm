@@ -54,3 +54,26 @@ export const processSteps = [
   "Monitor",
   "Scale",
 ] as const;
+
+export const managedITPlans = [
+  {
+    name: "Essential",
+    description: "For small teams that need dependable everyday IT.",
+    features: ["Remote helpdesk support", "Device monitoring and maintenance", "Software updates and security patching", "Antivirus and endpoint protection", "Automated backups"],
+    popular: false,
+  },
+  {
+    name: "Business",
+    description: "For growing businesses that need stronger security and management.",
+    features: ["Everything in Essential", "Advanced email and phishing protection", "Multi-factor authentication setup", "Microsoft 365 / Google Workspace management", "Quarterly security review", "Monthly IT health report"],
+    popular: true,
+  },
+  {
+    name: "Premium",
+    description: "For businesses that want a full IT partner.",
+    features: ["Everything in Business", "Cloud cost optimization reviews", "One automation or AI improvement per quarter", "Priority support", "Dedicated account contact"],
+    popular: false,
+  },
+];
+
+export const projectServices = ["Cybersecurity audits", "Cloud setup and migration", "AI and workflow automation", "Office and remote team IT setup"];
