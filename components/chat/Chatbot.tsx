@@ -25,6 +25,7 @@ export function Chatbot() {
   const [pendingId, setPendingId] = useState("");
   const [error, setError] = useState("");
   const input = useRef<HTMLTextAreaElement>(null);
+  const container = useRef<HTMLDivElement>(null);
   const launcher = useRef<HTMLButtonElement>(null);
   const transcript = useRef<HTMLDivElement>(null);
   const controller = useRef<AbortController | null>(null);
@@ -53,13 +54,45 @@ export function Chatbot() {
 
   useEffect(() => {
     if (!open || hidden) return;
-    input.current?.focus();
+    // Touch users open the keyboard themselves by tapping the composer.
+    if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) input.current?.focus({ preventScroll: true });
     function escape(event: KeyboardEvent) {
       if (event.key === "Escape") close();
     }
     document.addEventListener("keydown", escape);
     return () => document.removeEventListener("keydown", escape);
   }, [open, hidden, close]);
+
+  useEffect(() => {
+    if (!open || hidden) return;
+    const element = container.current;
+    const viewport = window.visualViewport;
+    if (!element || !viewport) return;
+    let frame = 0;
+    function update() {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        if (!element || !viewport) return;
+        // Follow the visible viewport as the keyboard opens or Safari pans it.
+        const inset = Math.max(0, window.innerHeight - viewport.height - viewport.offsetTop);
+        element.style.setProperty("--chat-keyboard-inset", `${inset}px`);
+        element.style.setProperty("--chat-viewport-height", `${viewport.height}px`);
+        scrollToBottom();
+      });
+    }
+    update();
+    viewport.addEventListener("resize", update);
+    viewport.addEventListener("scroll", update);
+    window.addEventListener("resize", update);
+    return () => {
+      cancelAnimationFrame(frame);
+      viewport.removeEventListener("resize", update);
+      viewport.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+      element.style.removeProperty("--chat-keyboard-inset");
+      element.style.removeProperty("--chat-viewport-height");
+    };
+  }, [open, hidden, scrollToBottom]);
 
   useEffect(() => {
     if (open) scrollToBottom();
@@ -109,7 +142,9 @@ export function Chatbot() {
       window.clearTimeout(timeout);
       controller.current = null;
       setPendingText("");
-      requestAnimationFrame(() => { if (openRef.current) input.current?.focus(); });
+      requestAnimationFrame(() => {
+        if (openRef.current && window.matchMedia("(hover: hover) and (pointer: fine)").matches) input.current?.focus({ preventScroll: true });
+      });
     }
   }
 
@@ -121,9 +156,9 @@ export function Chatbot() {
   if (hidden) return null;
 
   return (
-    <div className="iamm-chat fixed bottom-5 right-4 z-[60] sm:right-6" data-lenis-prevent>
+    <div ref={container} className="iamm-chat fixed bottom-[calc(1.25rem+var(--chat-keyboard-inset,0px))] right-4 z-[60] sm:right-6" data-lenis-prevent>
       {open || closing ? (
-        <section id="iamm-chat-panel" role="dialog" aria-labelledby="iamm-chat-title" aria-hidden={!open} inert={!open} className={`iamm-chat-panel ${closing ? "chat-panel-out" : "chat-panel-in"} mb-3 flex h-[min(620px,calc(100dvh-112px))] w-[min(390px,calc(100vw-32px))] origin-bottom-right flex-col overflow-hidden rounded-2xl border border-border bg-surface text-foreground shadow-2xl shadow-black/20`}>
+        <section id="iamm-chat-panel" role="dialog" aria-labelledby="iamm-chat-title" aria-hidden={!open} inert={!open} className={`iamm-chat-panel ${closing ? "chat-panel-out" : "chat-panel-in"} mb-3 flex h-[min(620px,calc(var(--chat-viewport-height,100dvh)-112px))] w-[min(390px,calc(100vw-32px))] origin-bottom-right flex-col overflow-hidden rounded-2xl border border-border bg-surface text-foreground shadow-2xl shadow-black/20`}>
           <header className="flex shrink-0 items-center gap-3 border-b border-border bg-muted px-5 py-4 text-foreground">
             <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary"><ChatIcon /></span>
             <div className="min-w-0 flex-1"><h2 id="iamm-chat-title" className="text-base font-semibold">Ask IAMM</h2><p className="mt-0.5 text-xs text-muted-foreground">Your AI guide to better business IT</p></div>
@@ -149,7 +184,7 @@ export function Chatbot() {
             <form onSubmit={submit}>
               <label htmlFor="iamm-chat-message" className="sr-only">Your question about IAMM</label>
               <div className="flex items-end gap-2 rounded-xl border border-border bg-background p-2 focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/15">
-                <textarea id="iamm-chat-message" ref={input} rows={2} value={draft} maxLength={1200} disabled={pending} onChange={(event) => setDraft(event.target.value)} onKeyDown={(event) => { if (event.key === "Enter" && !event.shiftKey && !event.nativeEvent.isComposing) { event.preventDefault(); void send(draft); } }} placeholder="Ask about services or plans..." className="min-w-0 flex-1 resize-none bg-transparent px-2 py-1 text-sm leading-6 outline-none disabled:opacity-60" />
+                <textarea id="iamm-chat-message" ref={input} rows={2} value={draft} maxLength={1200} disabled={pending} onChange={(event) => setDraft(event.target.value)} onKeyDown={(event) => { if (event.key === "Enter" && !event.shiftKey && !event.nativeEvent.isComposing) { event.preventDefault(); void send(draft); } }} placeholder="Ask about services or plans..." className="min-w-0 flex-1 resize-none bg-transparent px-2 py-1 text-base leading-6 outline-none disabled:opacity-60" />
                 <button type="submit" disabled={pending || !draft.trim()} aria-label="Send message" className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary text-secondary transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40 ${focusClass}`}><svg aria-hidden="true" viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="m22 2-7 20-4-9-9-4 20-7ZM22 2 11 13" /></svg></button>
               </div>
             </form>
